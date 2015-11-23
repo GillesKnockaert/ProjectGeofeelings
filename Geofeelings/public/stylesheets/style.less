@@ -1,21 +1,18 @@
-
 body{
   font: 18px "Lucida Grande", Helvetica, Arial, sans-serif;
   margin: 0px;
   padding: 0px;
 }
-
 h1{
   color: #ffffff;
 }
-
 .topofpage{
   margin: 0px;
   padding: 0px;
+  //de hoogte geeft nog problemen. dit is geen oplossing door vh te gebruiken maar werkt tijdelijk wel
   height: 100vh;
   background-size:cover;
   background: url("../images/background.jpg") no-repeat;
-
     #title{
       display: inline-block;
       margin: auto;
@@ -28,16 +25,24 @@ h1{
       }
     }
   fieldset{
+    width: 20%;
+    min-width: 150px;
+    margin: auto;
     margin-bottom: 50px;
+    background: rgba(0,0,0,0.2);
     input{
-      margin: auto;
+      width: 100%;
       display: block;
-      width: 20%;
-      min-width: 150px;
+      border-radius: 0;
+    }
+    label{
+      color: #ffffff;
+      font-size: 18px;
+      width: 100%;
+      display: block;
     }
   }
 }
-
 .footer{
   padding: 50px 0px 45px 0px;
   text-align: center;
