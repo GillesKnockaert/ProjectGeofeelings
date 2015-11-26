@@ -31,26 +31,16 @@
 </head>
 
 <body>
-
     <!-- Navigation -->
     <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
     <nav id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
             <li class="sidebar-brand">
-                <a href="#top"  onclick = $("#menu-close").click(); >Start Bootstrap</a>
+                <a href="#top"  onclick = $("#menu-close").click(); >Geofeelings</a>
             </li>
             <li>
-                <a href="#top" onclick = $("#menu-close").click(); >Home</a>
-            </li>
-            <li>
-                <a href="#about" onclick = $("#menu-close").click(); >About</a>
-            </li>
-            <li>
-                <a href="#services" onclick = $("#menu-close").click(); >Services</a>
-            </li>
-            <li>
-                <a href="#portfolio" onclick = $("#menu-close").click(); >Portfolio</a>
+                <a href="#top"  onclick = $("#menu-close").click(); >Connections</a>
             </li>
             <li>
                 <a href="#contact" onclick = $("#menu-close").click(); >Contact</a>
@@ -73,12 +63,24 @@
         <div class="text-vertical-center">
             <h1>HOW DO YOU FEEL?</h1>
             <h3>Geofeelings a webapp that shows how you really feel.</h3>
-            <br>
-            <a href="#about" class="btn btn-dark btn-lg">Happy</a>
-            <a href="#about" class="btn btn-dark btn-lg">Sad</a>
+
+
+            <!--
+            <div>
+                <a href="#"><div class="happy img-responsive"></div></a>
+                <a href="#"><div class="sad img-responsive"></div></a>
+            </div>
+                        -->
+
+            <div>
+                <a href="#"><img class="img-responsive" src="img/happy.png"></a>
+                <a href="#"><img class="img-responsive" src="img/sad.png"></a>
+            </div>
         </div>
     </header>
 
+
+    <!-- links to available connections -->
     <section class="row connect container">
         <h2 class="text-center">Connections</h2>
         <ul>

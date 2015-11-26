@@ -126,16 +126,26 @@ hr.small {
   margin: 5px 5px 0 0;
 }
 /* login form */
-fieldset {
-  width: 30%;
-  min-width: 250px;
-  margin: 60px auto 20px auto;
+@media screen and (min-height: 600px) {
+  fieldset {
+    width: 30%;
+    min-width: 250px;
+    margin: 60px auto 20px auto;
+  }
+  fieldset label {
+    font-size: 18px;
+  }
+  fieldset input {
+    width: 100%;
+  }
 }
-fieldset label {
-  font-size: 18px;
-}
-fieldset input {
-  width: 100%;
+@media screen and (max-height: 600px) {
+  fieldset {
+    display: none;
+  }
+  .text-vertical-center {
+    margin: 40px;
+  }
 }
 /* Header */
 .header {
@@ -156,6 +166,32 @@ fieldset input {
 }
 .header label {
   font-size: 14px;
+}
+@media screen and (max-width: 500px) {
+  .header div img {
+    width: 190px;
+    height: 190px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .header div img {
+    width: 150px;
+    height: 150px;
+  }
+}
+@media screen and (max-width: 350px) {
+  .header div img {
+    width: 100px;
+    height: 100px;
+  }
+}
+.header div img {
+  padding: 10px;
+  display: inline;
+  opacity: 0.6;
+}
+.header div img:hover {
+  opacity: 1;
 }
 /* About */
 .about {
@@ -192,4 +228,10 @@ footer {
 }
 footer .text-muted {
   color: #c0c0c0;
+}
+footer a {
+  color: #ffffff;
+}
+footer a:hover {
+  color: #b0b0b0;
 }
