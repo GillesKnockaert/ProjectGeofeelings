@@ -285,7 +285,7 @@ footer {
 
 /* ------------------ Instructions ------------------ */
 
-.instruction{
+.instructionPart{
   height: 100%;
   width: 100%;
   display: table;
@@ -294,8 +294,20 @@ footer {
     font-size: 3em;
   }
 }
+.instruction{
+  max-width: 500px;
+  margin: auto;
 
-.instructionOdd{
+  img{
+    max-width: 200px;
+  }
+  p, h2{
+    text-align: left;
+    max-width: 200px;
+  }
+}
+
+.instructionHeader{
   background-color: #1b6d85;
   color: #FFFFFF;
   img{
@@ -312,18 +324,39 @@ footer {
     margin-bottom: 10px;
   }
 }
-.instructionEven{
 
+.middlePart{
+  color: #ffffff;
+  background-color: #1b6d85;
 }
 
+//.instructionEven{
+//  img{
+//    margin: auto;
+//    max-width: 250px;
+//    @media screen  and (max-width: 400px) {
+//      width: 100px;
+//    }
+//    //max-width: 200px;
+//  }
+//  p, h2{
+//    margin: auto;
+//    max-width: 300px;
+//    margin-bottom: 10px;
+//  }
+//}
+
 .text-vertical-center2 {
-  background-color: rgba(0, 0, 0, 0.3);
+  //background-color: rgba(0, 0, 0, 0.3);
   display: table-cell;
   text-align: center;
   vertical-align: middle;
 }
 
 .backgroundimg{
+  .text-vertical-center2 {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
   background: url(../img/bg.jpg) no-repeat center center scroll;
   -webkit-background-size: cover;
   -moz-background-size: cover;
