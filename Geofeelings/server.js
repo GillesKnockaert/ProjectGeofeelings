@@ -17,9 +17,10 @@ var express = require('express'),
 
 //region WEB PAGES
 /*per pagina dient een route file aangemaakt te worden*/
-var routes = routes = require('./server/routes/index');
-var users = users = require('./server/routes/users');
-var test = test = require('./server/routes/test');
+var routes = require('./server/routes/index');
+var users = require('./server/routes/users');
+var test = require('./server/routes/test');
+var instructions = require('./server/routes/instructions');
 //endregion
 
 
@@ -51,6 +52,7 @@ app.use('/', routes);
 /*wnn een gebruiker naar de /users directory wil -> gebruik users object*/
 app.use('/users', users);
 app.use('/test', test);
+app.use('/instructions', instructions);
 
 // a middleware with no mount path; gets executed for every request to the app
  // catch 404 and forward to error handler
