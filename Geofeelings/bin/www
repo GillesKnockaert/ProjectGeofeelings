@@ -1,12 +1,19 @@
 #!/usr/bin/env node
 
+/*
+* bin/www is de main startup file / startup script
+* die de server zal starten met de bassiconfiguratie
+* daarna wordt server.js opgestart*/
+
 /**
  * Module dependencies.
  */
 
-var app = require('../app');
+//importeer module uit server.js
+var app = require('../server'); //d.i. onze express applicatie uit server.js
+
 var debug = require('debug')('geofeelings:server');
-var http = require('http');
+var http = require('http');  //de http module toevoegen
 
 /**
  * Get port from environment and store in Express.
@@ -18,23 +25,25 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
-
-var server = http.createServer(app);
+    //hiermee veranderen we onze nodejs code in een server
+    //parameter = de callback (de code die we willen uitvoeren als een gebruikr met de server verbindt)
+var server = http.createServer(app);  //met de http variabele maken we een server
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(port);  //server moet luisteren op poort 3000
 server.on('error', onError);
 server.on('listening', onListening);
+
 
 /**
  * Normalize a port into a number, string, or false.
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+  var port = parseInt(val, 10);  //zet een string om in een integer
 
   if (isNaN(port)) {
     // named pipe
@@ -88,3 +97,5 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+
