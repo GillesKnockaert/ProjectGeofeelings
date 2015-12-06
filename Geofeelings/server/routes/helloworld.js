@@ -4,10 +4,10 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET test page. */
-// a middleware sub-stack which handles GET requests to /test
+/* GET helloworld page. */
+// a middleware sub-stack which handles GET requests to /helloworld
 router.get('/', function(req, res, next) {
-    res.render('test');
+    res.render('helloworld', {title: 'Hello, World'});
 });
 
 module.exports = router;

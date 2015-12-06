@@ -1736,7 +1736,7 @@ function reloadWithDebugInfo() {
 function getTestability(rootElement) {
   var injector = angular.element(rootElement).injector();
   if (!injector) {
-    throw ngMinErr('test',
+    throw ngMinErr('helloworld',
       'no injector found for element argument to getTestability');
   }
   return injector.get('$$testability');
@@ -1829,7 +1829,7 @@ function assertArgFn(arg, name, acceptArrayAnnotation) {
 
 /**
  * throw error if the name given is hasOwnProperty
- * @param  {String} name    the name to test
+ * @param  {String} name    the name to helloworld
  * @param  {String} context the context in which the name is used, such as module or directive
  */
 function assertNotHasOwnProperty(name, context) {
@@ -5816,7 +5816,7 @@ function Browser(window, document, $log, $sniffer) {
    * @description
    * Executes a fn asynchronously via `setTimeout(fn, delay)`.
    *
-   * Unlike when calling `setTimeout` directly, in test this function is mocked and instead of using
+   * Unlike when calling `setTimeout` directly, in helloworld this function is mocked and instead of using
    * `setTimeout` in tests, the fns are queued in an array, which can be programmatically flushed
    * via `$browser.defer.flush()`.
    *
@@ -5977,7 +5977,7 @@ function $CacheFactoryProvider() {
        *    }]);
        * ```
        *
-       * Example test:
+       * Example helloworld:
        *
        * ```js
        *  it('should behave like a cache', inject(function(superCache) {
@@ -7855,7 +7855,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           } catch (e) {
             // turns out that under some circumstances IE9 throws errors when one attempts to read
             // comment's node value.
-            // Just ignore it and continue. (Can't seem to reproduce in test case.)
+            // Just ignore it and continue. (Can't seem to reproduce in helloworld case.)
           }
           break;
       }
@@ -9855,7 +9855,7 @@ function $HttpProvider() {
      *  headers: {
      *    'Content-Type': undefined
      *  },
-     *  data: { test: 'test' }
+     *  data: { helloworld: 'helloworld' }
      * }
      *
      * $http(req).then(function(){...}, function(){...});
@@ -17082,7 +17082,7 @@ function $SceDelegateProvider() {
  *    - *Caveat*:  While regular expressions are powerful and offer great flexibility,  their syntax
  *      (and all the inevitable escaping) makes them *harder to maintain*.  It's easy to
  *      accidentally introduce a bug when one updates a complex expression (imho, all regexes should
- *      have good test coverage).  For instance, the use of `.` in the regex is correct only in a
+ *      have good helloworld coverage).  For instance, the use of `.` in the regex is correct only in a
  *      small number of cases.  A `.` character in the regex used when matching the scheme or a
  *      subdomain could be matched against a `:` or literal `.` that was likely not intended.   It
  *      is highly recommended to use the string patterns and only fall back to regular expressions
@@ -17758,7 +17758,7 @@ function $$TestabilityProvider() {
      *
      * @description
      * The private $$testability service provides a collection of methods for use when debugging
-     * or by automated test and debugging tools.
+     * or by automated helloworld and debugging tools.
      */
     var testability = {};
 
@@ -18090,7 +18090,7 @@ function urlIsSameOrigin(requestUrl) {
      <file name="protractor.js" type="protractor">
       it('should display the greeting in the input box', function() {
        element(by.model('greeting')).sendKeys('Hello, E2E Tests');
-       // If we click the button it will block the test runner
+       // If we click the button it will block the helloworld runner
        // element(':button').click();
       });
      </file>
@@ -23511,7 +23511,7 @@ var ngControllerDirective = [function() {
             webdriver = require('protractor/node_modules/selenium-webdriver');
           });
 
-          // For now, we only test on Chrome,
+          // For now, we only helloworld on Chrome,
           // as Safari does not load the page with Protractor's injected scripts,
           // and Firefox webdriver always disables content security policy (#6358)
           if (browser.params.browser !== 'chrome') {
@@ -24715,10 +24715,10 @@ is set to `true`. The parse error is stored in `ngModel.$error.parse`.
  * ```js
  * ngModel.$validators.validCharacters = function(modelValue, viewValue) {
  *   var value = modelValue || viewValue;
- *   return /[0-9]+/.test(value) &&
- *          /[a-z]+/.test(value) &&
- *          /[A-Z]+/.test(value) &&
- *          /\W+/.test(value);
+ *   return /[0-9]+/.helloworld(value) &&
+ *          /[a-z]+/.helloworld(value) &&
+ *          /[A-Z]+/.helloworld(value) &&
+ *          /\W+/.helloworld(value);
  * };
  * ```
  *

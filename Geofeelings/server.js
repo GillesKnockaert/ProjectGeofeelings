@@ -14,22 +14,36 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     mongoose = require('mongoose');
 
+//endregion
+
+//region MONGODB SETUP
+/*
+ mongoose.connect('mongodb://localhost/geofeelings');
+ var db = mongoose.connection;
+ db.on('error', console.error.bind(console, 'connection error ...'));
+ db.once('open',function callback(){
+ console.log("geofeelings db opened");
+ });
+ */
+
+// New Code
+var mongo = require('mongodb');  //we willen praten met mongo
+var monk = require('monk'); //we praten dmv monk
+var db = monk('localhost:27017/geofeelings'); // onze DB is hier te vinden
+
+//endregion
+
 
 //region WEB PAGES
 /*per pagina dient een route file aangemaakt te worden*/
 var routes = require('./server/routes/index');
 var users = require('./server/routes/users');
-var test = require('./server/routes/test');
+var helloworld = require('./server/routes/helloworld');
 var instructions = require('./server/routes/instructions');
 //endregion
 
-
-
-//endregion
-
-
 //region EXPRESS SETUP
-/*het app object is verantwoordelijk voor de requests af te handelen*/
+/*het app object is verantwoordelijk voor het afhandelen van de requests*/
 var app = express(); //variabele voor een applicatie die we met express willen maken
 
  // view engine setup
@@ -43,15 +57,21 @@ var app = express(); //variabele voor een applicatie die we met express willen m
  app.use(bodyParser.urlencoded({ extended: false }));
  app.use(cookieParser());
  app.use(require('less-middleware')(path.join(__dirname, 'public')));
- app.use(express.static(path.join(__dirname, 'public'))); //responsible for serving the static assets of an Express application.
+ app.use(express.static(path.join(__dirname, 'public'))); //responsible for serving the static assets (images, CSS files, and JavaScript files) of an Express application.
 
 //endregion
+
+// Make our db accessible to our router
+app.use(function(req,res,next){
+    req.db = db;  // db = Monk connection object --> we voegen deze functie toe aan app.use zodat iedere HTTP request het object meekrijgt
+    next();
+});
 
 /*wnn een gebruiker naar de home of / directory wil -> gebruik routes object*/
 app.use('/', routes);
 /*wnn een gebruiker naar de /users directory wil -> gebruik users object*/
 app.use('/users', users);
-app.use('/test', test);
+app.use('/helloworld', helloworld);
 app.use('/instructions', instructions);
 
 // a middleware with no mount path; gets executed for every request to the app
@@ -86,14 +106,8 @@ app.use('/instructions', instructions);
     });
  });
 
-//region MONGODB SETUP
-mongoose.connect('mongodb://localhost/geofeelings');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error ...'));
-db.once('open',function callback(){
-    console.log("geofeelings db opened");
-});
-//endregion
+
+
 
 
 //maakt de variabele 'app' beschikbaar voor andere o.a. bin/www.js
