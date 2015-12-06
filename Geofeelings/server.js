@@ -26,7 +26,7 @@ var express = require('express'),
  });
  */
 
-// New Code
+//region MongoDB & Monk
 var mongo = require('mongodb');  //we willen praten met mongo
 var monk = require('monk'); //we praten dmv monk
 var db = monk('localhost:27017/geofeelings'); // onze DB is hier te vinden
