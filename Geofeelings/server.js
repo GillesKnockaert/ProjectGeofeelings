@@ -47,7 +47,7 @@ var instructions = require('./server/routes/instructions');
 var app = express(); //variabele voor een applicatie die we met express willen maken
 
  // view engine setup
- app.set('views', path.join(__dirname, 'views'));
+ app.set('views', path.join(__dirname, 'views')); //in deze folder zijn de views te vinden
  app.set('view engine', 'jade');
 
  // uncomment after placing your favicon in /public
@@ -58,7 +58,9 @@ var app = express(); //variabele voor een applicatie die we met express willen m
  app.use(cookieParser());
  app.use(require('less-middleware')(path.join(__dirname, 'public')));
  app.use(express.static(path.join(__dirname, 'public'))); //responsible for serving the static assets (images, CSS files, and JavaScript files) of an Express application.
-
+                                                            /*That tells express/node that the public directory should act as your web root.
+                                                            Everything in it can be referenced via /,
+                                                            so if you also have a CSS folder in there, you might use /css/styles.css*/
 //endregion
 
 // Make our db accessible to our router

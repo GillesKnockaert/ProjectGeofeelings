@@ -1,4 +1,11 @@
 extends layout
 
 block content
-    //include ../server/includes/footer
+  block header
+    include ../server/includes/header.jade
+  block connections
+      include ../server/includes/connections.jade
+  block footer
+    include ../server/includes/footer.jade
+  block scripts
+    include ../server/includes/scripts.jade

@@ -19,12 +19,15 @@ html
         link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic')
 
   body
+    //block header
+        include ../server/includes/header.jade
+
     block content
 
-    block footer
+    //block footer
         include ../server/includes/footer.jade
 
-    block scripts
+    //block scripts
         include ../server/includes/scripts.jade
 
 

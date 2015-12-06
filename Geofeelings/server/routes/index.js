@@ -6,7 +6,7 @@ var router = express.Router();
 router.get('/home', function(req, res, next) {
   //res.render('index', { title: 'Express' });
   //res.sendFile('views/index.html');
-  res.render('home', { title: 'Express' });
+  res.render('home');
 
 });
 
