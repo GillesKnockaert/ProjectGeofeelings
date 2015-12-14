@@ -4,6 +4,8 @@
 * het gepaste antwoord geven (obv de url)
 * */
 
+"use strict";
+
 //region SET UP ==================================================================
 var express = require('express'),
     logger = require('morgan'), //log requests to the console (express4)
@@ -14,6 +16,7 @@ var express = require('express'),
 var passport = require('passport');
 var db = require('./server/config/db'); //load config
 var app = express(); //create our app w/ express
+var server = require('http').createServer(app);
 
 //endregion
 
@@ -75,8 +78,8 @@ var authRoute = require('./server/routes/authRoute');
 
 
 //registreren van de routes
-app.use('/api/users/', usersRoute);  //gebruik de users module voor alle routes die starten met /api/users
 app.use('/', frontendRoutes); //--> front end
+app.use('/api/users/', usersRoute);  //gebruik de usersRoute module voor alle routes die starten met /api/users
 app.use('/api/statuses/', statusesRoute);
 app.use('api/authenticate', authRoute);
 
@@ -131,8 +134,13 @@ app.use('api/authenticate', authRoute);
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 
+// Start the server
+server.listen(3000, function () {
+    var host = server.address().address;
+    var port = server.address().port;
 
-
+    console.log('Listening to your feelings at http://%s:%s', host, port);
+});
 
 
 
