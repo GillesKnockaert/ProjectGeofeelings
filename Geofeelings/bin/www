@@ -2,7 +2,7 @@
 
 /*
 * bin/www is de main startup file / startup script
-* die de server zal starten met de bassiconfiguratie
+* die de server zal starten met de basisconfiguratie
 * daarna wordt server.js opgestart*/
 
 /**
@@ -19,21 +19,21 @@ var http = require('http');  //de http module toevoegen
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '3000'); //zoekt naar port in environment, als er geen is --> 3000 gebruiken
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
     //hiermee veranderen we onze nodejs code in een server
-    //parameter = de callback (de code die we willen uitvoeren als een gebruikr met de server verbindt)
+    //parameter = de callback (de code die we willen uitvoeren als een gebruiker met de server verbindt)
 var server = http.createServer(app);  //met de http variabele maken we een server
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);  //server moet luisteren op poort 3000
+server.listen(port);  //server luistert op poort 3000
 server.on('error', onError);
 server.on('listening', onListening);
 

@@ -4,87 +4,96 @@
 * het gepaste antwoord geven (obv de url)
 * */
 
-//region MODULE IMPORTS
+//region SET UP ==================================================================
 var express = require('express'),
-    logger = require('morgan'), //logger binnen Express
-    bodyParser = require('body-parser'),  //voor parsen van body of JSON
-    less = require('less'),
-    path = require('path')
-    favicon = require('serve-favicon'),
-    cookieParser = require('cookie-parser'),
-    mongoose = require('mongoose');
+    logger = require('morgan'), //log requests to the console (express4)
+    bodyParser = require('body-parser'),  // pull information from HTML POST (express4)
+    path = require('path'),
+    methodOverride = require('method-override'); //simulate DELETE and PUT (express4)
+
+var passport = require('passport');
+var db = require('./server/config/db'); //load config
+var app = express(); //create our app w/ express
 
 //endregion
 
-//region MONGODB SETUP
-/*
- mongoose.connect('mongodb://localhost/geofeelings');
- var db = mongoose.connection;
- db.on('error', console.error.bind(console, 'connection error ...'));
- db.once('open',function callback(){
- console.log("geofeelings db opened");
- });
- */
+//region CONFIGURATION ==================================================================
 
-//region MongoDB & Monk
-var mongo = require('mongodb');  //we willen praten met mongo
-var monk = require('monk'); //we praten dmv monk
-var db = monk('localhost:27017/geofeelings'); // onze DB is hier te vinden
+//MONGODB
+db.connect(db.url, function(err) {
+    if (err) {
+        console.log('Unable to connect to Mongo database.');
+        process.exit(1);
+    } else {
+        console.log('Connected to the Geofeelings DB');
+    }
+});
 
-//endregion
-
-
-//region WEB PAGES
-/*per pagina dient een route file aangemaakt te worden*/
-var routes = require('./server/routes/index');
-var users = require('./server/routes/users');
-var helloworld = require('./server/routes/helloworld');
-var instructions = require('./server/routes/instructions');
-//endregion
-
-//region EXPRESS SETUP
-/*het app object is verantwoordelijk voor het afhandelen van de requests*/
-var app = express(); //variabele voor een applicatie die we met express willen maken
+//EXPRESS SETUP
 
  // view engine setup
  app.set('views', path.join(__dirname, 'views')); //in deze folder zijn de views te vinden
  app.set('view engine', 'jade');
 
  // uncomment after placing your favicon in /public
- //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
- app.use(logger('dev'));
+ //server.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+ app.use(logger('dev'));    // log every request to the console
+
+ // get all data/stuff of the body (POST) parameters
+ // parse application/json
  app.use(bodyParser.json());
- app.use(bodyParser.urlencoded({ extended: false }));
- app.use(cookieParser());
- app.use(require('less-middleware')(path.join(__dirname, 'public')));
+
+ // parse application/vnd.api+json as json
+ app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+
+ // parse application/x-www-form-urlencoded
+ app.use(bodyParser.urlencoded({ extended: true }));
+
+ // override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
+ app.use(methodOverride('X-HTTP-Method-Override'));
+
  app.use(express.static(path.join(__dirname, 'public'))); //responsible for serving the static assets (images, CSS files, and JavaScript files) of an Express application.
                                                             /*That tells express/node that the public directory should act as your web root.
                                                             Everything in it can be referenced via /,
+
                                                             so if you also have a CSS folder in there, you might use /css/styles.css*/
+
+
+  // Use the passport package in our application
+  app.use(passport.initialize());
+
 //endregion
 
-// Make our db accessible to our router
-app.use(function(req,res,next){
-    req.db = db;  // db = Monk connection object --> we voegen deze functie toe aan app.use zodat iedere HTTP request het object meekrijgt
-    next();
-});
+//region ROUTES
+//endpoints API service vastleggen
+var frontendRoutes = require('./server/routes/routes');
+var usersRoute = require('./server/routes/usersRoute');
+var statusesRoute = require('./server/routes/statusesRoutes');
+var authRoute = require('./server/routes/authRoute');
 
-/*wnn een gebruiker naar de home of / directory wil -> gebruik routes object*/
-app.use('/', routes);
-/*wnn een gebruiker naar de /users directory wil -> gebruik users object*/
-app.use('/users', users);
-app.use('/helloworld', helloworld);
-app.use('/instructions', instructions);
 
-// a middleware with no mount path; gets executed for every request to the app
+
+//registreren van de routes
+app.use('/api/users/', usersRoute);  //gebruik de users module voor alle routes die starten met /api/users
+app.use('/', frontendRoutes); //--> front end
+app.use('/api/statuses/', statusesRoute);
+app.use('api/authenticate', authRoute);
+
+
+
+// a middleware with no mount path; gets executed for every request to the server
  // catch 404 and forward to error handler
  app.use(function(req, res, next) {
+     console.log("MIDDLEWARE!")
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
  });
 
- // error handlers
+//endregion
+
+//region ERROR HANDLERS ==================================================================
 
  // development error handler
  // will print stacktrace
@@ -98,6 +107,7 @@ app.use('/instructions', instructions);
     });
  }
 
+
  // production error handler
  // no stacktraces leaked to user
  app.use(function(err, req, res, next) {
@@ -108,12 +118,13 @@ app.use('/instructions', instructions);
     });
  });
 
+//endregion
 
 
-
-
-//maakt de variabele 'app' beschikbaar voor andere o.a. bin/www.js
- module.exports = app;  //app is onze express applicatie
+//region EXPORTS ========================================================================
+//maakt de variabele 'server' beschikbaar voor andere o.a. bin/www.js
+ module.exports = app;  //server is onze express applicatie
+//endregion
 
 /*------------------------------------------------------------------------------------------------------------*/
 //bepalen of we in productie of development fase mode

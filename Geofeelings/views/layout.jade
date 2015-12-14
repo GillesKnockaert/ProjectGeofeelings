@@ -1,5 +1,5 @@
 doctype html
-html
+html(ng-app="Geofeelings")
   head
       meta(charset='utf-8')
       meta(http-equiv='X-UA-Compatible', content='IE=edge')
@@ -10,13 +10,8 @@ html
       title Geofeelings
 
       block css
-        //Bootstrap Core CSS
-        link(rel='stylesheet', href='/css/bootstrap.min.css')
-        //custom CSS
-        link(rel='stylesheet', href='/css/geofeelings.css')
-        //custom fonts
-        link(rel='stylesheet', href='/font-awesome/css/font-awesome.min.css')
-        link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic')
+
+      block headScripts
 
   body
     //block header
@@ -24,11 +19,12 @@ html
 
     block content
 
-    //block footer
-        include ../server/includes/footer.jade
 
-    //block scripts
-        include ../server/includes/scripts.jade
+    block footer
+        include ./includes/footer.jade
+
+    block scripts
+        include ./includes/scripts.jade
 
 
 
