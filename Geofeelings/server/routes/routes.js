@@ -4,6 +4,7 @@
 
 var express = require('express');
 var router = express.Router();
+var path = require('path');
 
 
 //region FRONTEND ROUTES ==================================================
@@ -16,15 +17,13 @@ var router = express.Router();
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-    res.render('index');
+    res.sendFile(path.join(__dirname, '../../public/views/index.html'));
 });
 
 router.get('/instructions', function(req, res, next) {
-    res.render('index');
+    res.sendFile(path.join(__dirname, '../../public/views/instructions.html'));
 });
 
-
 //endregion
-
 
 module.exports = router;

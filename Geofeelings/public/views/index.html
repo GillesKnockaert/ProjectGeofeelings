@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="Geofeelings">
 
 <head>
 
@@ -10,6 +10,10 @@
     <meta name="author" content="">
 
     <title>Geofeelings</title>
+
+    <script src="js/vendor/angular/angular.js"></script>
+    <script src="/js/vendor/angular-route/angular-route.js"></script>
+    <script src="/js/app.js"></script>
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -27,166 +31,16 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-</head>
-
-<body>
-    <!-- Navigation -->
-    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
-    <nav id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
-            <li class="sidebar-brand">
-                <a href="#top"  onclick = $("#menu-close").click(); >Geofeelings</a>
-            </li>
-            <li>
-                <a href="#top"  onclick = $("#menu-close").click(); >Connections</a>
-            </li>
-            <li>
-                <a href="#contact" onclick = $("#menu-close").click(); >Contact</a>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- Header -->
-    <header id="top" class="header">
-
-        <fieldset>
-            <label class="label" for="txtUsername">Username</label>
-            <input type="text" class="form-control" id="txtUsername" placeholder="Username...">
-            <label class="label" for="txtPassword">Password</label>
-            <input type="text" class="form-control" id="txtPassword" placeholder="Password...">
-            <input type="button"  class="btn-primary btn" id="btnLogin" value="Login">
-            <input type="button" class="btn-primary btn" id="btnRegister" value="Register">
-        </fieldset>
-
-        <div class="text-vertical-center">
-            <h1>HOW DO YOU FEEL?</h1>
-            <h3>Geofeelings a webapp that shows how you really feel.</h3>
-
-            <div>
-                <a href="#"><img class="img-responsive" src="../img/happy.png"></a>
-                <a href="#"><img class="img-responsive" src="../img/sad.png"></a>
-            </div>
-        </div>
-    </header>
-
-
-    <!-- links to available connections -->
-    <section class="row connect container">
-        <h2 class="text-center">Connections</h2>
-        <ul>
-            <li class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                <div>
-                    <img src="img/user.png">
-                    <p>Gilles Knockaert</p>
-                </div>
-            </li>
-            <li class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                <div>
-                    <img src="img/user.png">
-                    <p>Gilles Knockaert</p>
-                </div>
-            </li>
-            <li class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                <div>
-                    <img src="img/user.png">
-                    <p>Gilles Knockaert</p>
-                </div>
-            </li>
-            <li class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                <div>
-                    <img src="img/user.png">
-                    <p>Gilles Knockaert</p>
-                </div>
-            </li>
-            <li class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                <div>
-                    <img src="img/user.png">
-                    <p>Gilles Knockaert</p>
-                </div>
-            </li>
-            <li class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                <div>
-                    <img src="img/user.png">
-                    <p>Gilles Knockaert</p>
-                </div>
-            </li>
-            <li class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                <div>
-                    <img src="img/user.png">
-                    <p>Gilles Knockaert</p>
-                </div>
-            </li>
-        </ul>
-
-    </section>
-
-
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <h4><strong>Geofeelings</strong></h4>
-                    <p>Created By:</p>
-                    <p><i class="fa fa-user fa-fw"></i> Frederic gryspeerdt</p>
-                    <p><i class="fa fa-user fa-fw"></i> Gilles Knockaert</p>
-
-                    <br>
-                    <ul class="list-inline">
-                        <li>
-                            <a href="#"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
-                        </li>
-                    </ul>
-                    <hr class="small">
-                    <p class="text-muted">Copyright &copy; Geofeelings</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
     <!-- jQuery -->
     <script src="../js/jquery.js"></script>
-
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script>
-    // Closes the sidebar menu
-    $("#menu-close").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
+</head>
 
-    // Opens the sidebar menu
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
+<body ng-view>
 
-    // Scrolls to the selected menu item on the page
-    $(function() {
-        $('a[href*=#]:not([href=#])').click(function() {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
-
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-    });
-    </script>
-
+<!-- custom javascript for nav menu -->
+<script src="../js/sidebarnav.js"></script>
 </body>
-
 </html>
