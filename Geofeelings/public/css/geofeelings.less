@@ -1,9 +1,4 @@
-/*!
- * Start Bootstrap - Stylish Portfolio Bootstrap Theme (http://startbootstrap.com)
- * Code licensed under the Apache License v2.0.
- * For details, see http://www.apache.org/licenses/LICENSE-2.0.
- */
-
+@import "variables";
 /* Global Styles */
 
 html,
@@ -23,7 +18,7 @@ body {
 .text-vertical-center {
   //display: table-cell;
   text-align: center;
-  color: #ffffff;
+  color: @LightFontColor;
   vertical-align: middle;
 }
 
@@ -34,27 +29,28 @@ h1 {
   font-weight: 700;
 }
 
-/* Custom Button Styles */
-
-.btn-dark {
-  border-radius: 0;
-  color: #fff;
-  background-color: rgba(0,0,0,0.4);
+/* Custom Horizontal Rule */
+hr.small {
+  max-width: 100px;
 }
 
+/* navigation button */
+.btn-dark {
+  border-radius: 0;
+  color: @LightFontColor;
+  background-color: rgba(0,0,0,0.4);
+}
 .btn-dark:hover,
 .btn-dark:focus,
 .btn-dark:active {
-  color: #fff;
+  color: @LightFontColor;
   background-color: rgba(0,0,0,0.7);
 }
-
 .btn-light {
   border-radius: 0;
   color: #333;
   background-color: rgb(255,255,255);
 }
-
 .btn-light:hover,
 .btn-light:focus,
 .btn-light:active {
@@ -62,13 +58,7 @@ h1 {
   background-color: rgba(255,255,255,0.8);
 }
 
-/* Custom Horizontal Rule */
-hr.small {
-  max-width: 100px;
-}
-
 /* Side Menu */
-
 #sidebar-wrapper {
   z-index: 1000;
   position: fixed;
@@ -107,7 +97,7 @@ hr.small {
 
 .sidebar-nav li a:hover {
   text-decoration: none;
-  color: #fff;
+  color: @LightFontColor;
   background: rgba(255,255,255,0.2);
 }
 
@@ -127,7 +117,7 @@ hr.small {
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
-  color: #fff;
+  color: @LightFontColor;
   background: none;
 }
 
@@ -270,13 +260,13 @@ hr.small {
 
 footer {
   background-color: #1b6d85;
-  color: #ffffff;
+  color: @LightFontColor;
   padding: 100px 0;
   .text-muted{
     color: #c0c0c0;
   }
   a{
-    color: #ffffff;
+    color: @LightFontColor;
   }
   a:hover {
     color: #b0b0b0;
@@ -309,7 +299,7 @@ footer {
 
 .instructionHeader{
   background-color: #1b6d85;
-  color: #FFFFFF;
+  color: @LightFontColor;
   img{
     margin: auto;
     max-width: 250px;
@@ -326,7 +316,7 @@ footer {
 }
 
 .middlePart{
-  color: #ffffff;
+  color: @LightFontColor;
   background-color: #1b6d85;
 }
 

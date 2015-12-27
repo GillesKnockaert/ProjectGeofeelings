@@ -7,7 +7,7 @@
                 <a href="#top"  onclick = $("#menu-close").click(); >Geofeelings</a>
             </li>
             <li>
-                <a href="#top"  onclick = $("#menu-close").click(); >Connections</a>
+                <a href="#connections"  onclick = $("#menu-close").click(); >Connections</a>
             </li>
             <li>
                 <a href="#contact" onclick = $("#menu-close").click(); >Contact</a>
@@ -40,7 +40,7 @@
 
 
     <!-- links to available connections -->
-    <section class="row connect container">
+    <section id="connections" class="row connect container">
         <h2 class="text-center">Connections</h2>
         <ul>
             <li class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
@@ -89,44 +89,6 @@
 
     </section>
 
-    <!-- jQuery -->
-    <script src="../js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../js/bootstrap.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script>
-    // Closes the sidebar menu
-    $("#menu-close").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-
-    // Opens the sidebar menu
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-
-    // Scrolls to the selected menu item on the page
-    $(function() {
-        $('a[href*=#]:not([href=#])').click(function() {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
-
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-    });
-    </script>
-
-</body>
-
-</html>
+    <!-- Footer -->
+    <footer id="contact" ng-include="'partials/footer.html'">
+    </footer>
