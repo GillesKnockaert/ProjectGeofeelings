@@ -6,7 +6,7 @@ var supertest = require('supertest');
 
 gulp.task('default', function(){
     nodemon({
-        script: 'server.js',
+        script: 'bin/www',
         ext: 'js',
         env: {
 
