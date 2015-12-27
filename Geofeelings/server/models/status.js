@@ -1,13 +1,9 @@
 //Load mongoDB driver
 var mongoose = require('mongoose');
+var StatusSchema = require('../schemas/status');
 
-//define our status schema
-var StatusSchema = new mongoose.Schema({
-    longitude: Number,
-    latitude: Number,
-    message: String,
-    userId: String
-});
+var Status = mongoose.model('Status', StatusSchema, 'status');
 
-//bind the Status model to the LocationSchema
-module.exports = mongoose.model('Status', StatusSchema);
+
+//bind the Status model to the statusSchema
+module.exports = Status;

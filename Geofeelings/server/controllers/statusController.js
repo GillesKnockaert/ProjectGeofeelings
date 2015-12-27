@@ -153,16 +153,12 @@ var statusController = function(User, Status){
         var status = new Status();
 
         //Set the Status properties that came from the POST data
-        console.log(req.body.message);
-        console.log(req.body.latitude);
-        console.log(req.body.longitude);
 
-        status.longitude = req.body.longitude;
-        status.latitude = req.body.latitude;
+        status.mood = req.body.mood;
         status.message = req.body.message;
 
         //passport will automatically set the user in req.user
-        status.userId = req.user._id;
+        status._creator = req.user._id;
 
         //save the status and check for errors
         status.save(function(err){
