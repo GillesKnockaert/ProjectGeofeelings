@@ -3,6 +3,7 @@ var nodemon = require('gulp-nodemon');
 var gulpMocha = require('gulp-mocha');
 var env = require('gulp-env');
 var supertest = require('supertest');
+var less = require('gulp-less');
 
 gulp.task('default', function(){
     nodemon({
@@ -24,3 +25,8 @@ gulp.task('test', function(){
         .pipe(gulpMocha({reporter: 'nyan'}))
 });
 
+gulp.task('less', function () {
+    return gulp.src("./public/css/*.less")
+        .pipe(less())
+        .pipe(gulp.dest("./public/dist/"));
+});
