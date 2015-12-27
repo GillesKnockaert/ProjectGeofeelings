@@ -15,6 +15,7 @@ var state = {
 }
 
 exports.url = 'mongodb://localhost:27017/geofeelings';
+exports.testUrl = 'mongodb://localhost:27017/geofeelings_test';
 
 exports.connect = function(url, done){
     //er is al een connectie met de DB (db != null)
@@ -23,6 +24,7 @@ exports.connect = function(url, done){
     }
 
     //er is nog geen connectie --> maak een nieuwe aan
+
     mongoose.connect(url, function(err, db){
         if (err) return done(err);
 

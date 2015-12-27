@@ -10,53 +10,31 @@
  */
 
 //importeer module uit server.js
-var app = require('../server'); //d.i. onze express applicatie uit server.js
-
 var debug = require('debug')('geofeelings:server');
+var app = require('../app'); //d.i. onze express applicatie uit server.js
+var config = require('../config');
 var http = require('http');  //de http module toevoegen
 
-/**
- * Get port from environment and store in Express.
- */
+var server = http.createServer(app);
 
-var port = normalizePort(process.env.PORT || '3000'); //zoekt naar port in environment, als er geen is --> 3000 gebruiken
-app.set('port', port);
+//2. initialisaties
+app.set('port', process.env.PORT || 3000);
 
-/**
- * Create HTTP server.
- */
-    //hiermee veranderen we onze nodejs code in een server
-    //parameter = de callback (de code die we willen uitvoeren als een gebruiker met de server verbindt)
-var server = http.createServer(app);  //met de http variabele maken we een server
+var port = app.get('port');
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+//2.1. (self) executing database connectie
+var DBService = require("../server/config/connectDBService.js");
+var connectDB = DBService(config.MONGODBURL, require('mongoose')); //connected mongoose
 
-server.listen(port);  //server luistert op poort 3000
+//3. listeners voor server en io
+server.listen(app.get('port'), function () {
+    console.log('Express server listening on port :'+ app.get('port'));
+});
+
+
 server.on('error', onError);
 server.on('listening', onListening);
 
-
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
-  var port = parseInt(val, 10);  //zet een string om in een integer
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
 
 /**
  * Event listener for HTTP server "error" event.

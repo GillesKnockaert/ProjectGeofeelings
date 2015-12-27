@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 
 //MONGOOSE ===============================================================================
 //define our user schema
-var UserSchema =  new mongoose.Schema({
+var UserSchema =  new Schema({
     name: {
         type: String,
         unique: true,
@@ -58,7 +59,8 @@ UserSchema.methods.verifyPassword = function(password, cb) {
 
 
 //export the Mongoose model
-exports.userModel = mongoose.model('User', UserSchema);
+//"hey mongoose, we have a new model ('User') for you"
+module.exports = mongoose.model('User', UserSchema);
 
 
 

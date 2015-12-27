@@ -4,17 +4,15 @@
 * het gepaste antwoord geven (obv de url)
 * */
 
-"use strict";
-
 //region SET UP ==================================================================
 var express = require('express'),
     logger = require('morgan'), //log requests to the console (express4)
-    bodyParser = require('body-parser'),  // pull information from HTML POST (express4)
+    bodyParser = require('body-parser'),// kijkt naar de body van http req en zoekt naar json objects --> zo ja: plaats json in req.body
     path = require('path'),
     methodOverride = require('method-override'); //simulate DELETE and PUT (express4)
 
 var passport = require('passport');
-var db = require('./server/config/db'); //load config
+var db = require('./../server/config/db'); //load config
 var app = express(); //create our app w/ express
 var server = require('http').createServer(app);
 
@@ -23,7 +21,16 @@ var server = require('http').createServer(app);
 //region CONFIGURATION ==================================================================
 
 //MONGODB
-db.connect(db.url, function(err) {
+var dbUrl;
+
+if(process.env.ENV == 'Test'){
+    dbUrl = db.testUrl;
+
+} else{
+    dbUrl = db.url;
+}
+//console.log(dbUrl);
+db.connect(dbUrl, function(err) {
     if (err) {
         console.log('Unable to connect to Mongo database.');
         process.exit(1);
@@ -70,18 +77,20 @@ db.connect(db.url, function(err) {
 
 //region ROUTES
 //endpoints API service vastleggen
-var frontendRoutes = require('./server/routes/routes');
-var usersRoute = require('./server/routes/usersRoute');
-var statusesRoute = require('./server/routes/statusesRoutes');
-var authRoute = require('./server/routes/authRoute');
+var frontendRoutes = require('./../server/routes/indexRoute');
+var usersRoute = require('./../server/routes/usersRoutes');
+var statusesRoute = require('./../server/routes/statusRoutes');
+var authRoute = require('./../server/routes/authRoutes');
 
-
+//mongoose models
+var User = require('./../server/models/user');
+var Status = require('./../server/models/status');
 
 //registreren van de routes
 app.use('/', frontendRoutes); //--> front end
-app.use('/api/users/', usersRoute);  //gebruik de usersRoute module voor alle routes die starten met /api/users
-app.use('/api/statuses/', statusesRoute);
-app.use('api/authenticate', authRoute);
+app.use('/api/users/', usersRoute(User));  //gebruik de usersRoute module voor alle routes die starten met /api/users
+app.use('/api/statuses/', statusesRoute(User, Status));
+app.use('api/authenticate', authRoute(User));
 
 
 
@@ -124,23 +133,29 @@ app.use('api/authenticate', authRoute);
 //endregion
 
 
-//region EXPORTS ========================================================================
-//maakt de variabele 'server' beschikbaar voor andere o.a. bin/www.js
- module.exports = app;  //server is onze express applicatie
-//endregion
-
 /*------------------------------------------------------------------------------------------------------------*/
 //bepalen of we in productie of development fase mode
-var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+//var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-
+//region SERVER
+var port = process.env.PORT || 3000;
 // Start the server
-server.listen(3000, function () {
-    var host = server.address().address;
+server.listen(port, function () {
+    //var host = server.address().address;
     var port = server.address().port;
 
-    console.log('Listening to your feelings at http://%s:%s', host, port);
+    console.log('Listening to your feelings on PORT %s', port);
 });
+
+
+//endregion
+
+
+//region EXPORTS ========================================================================
+//maakt de variabele 'server' beschikbaar voor andere o.a. bin/www.js
+module.exports = server;  //server is onze express applicatie
+//endregion
+
 
 
 
