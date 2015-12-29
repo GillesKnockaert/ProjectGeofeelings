@@ -1,0 +1,35 @@
+{
+  "name": "Geofeelings",
+  "version": "0.0.0",
+  "homepage": "https://github.com/GillesKnockaert/ProjectGeofeelings",
+  "authors": [
+    {
+      "name": "Frederic Gryspeerdt",
+      "email": "frederic.gryspeerdt@student.howest.be"
+    },
+    {
+      "name": "Gilles Knockaert",
+      "email": "Gilles.Knockaert@student.howest.be"
+    }
+  ],
+  "description": "A realtime happiness indicator",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/js",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "latest",
+    "font-awesome": "latest",
+    "jquery": "latest",
+    "angular": "latest",
+    "angular-route": "latest",
+    "bootstrap": "latest"
+  }
+}

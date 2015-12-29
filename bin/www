@@ -1,0 +1,79 @@
+#!/usr/bin/env node
+
+/*
+* bin/www is de main startup file / startup script
+* die de server zal starten met de basisconfiguratie
+* daarna wordt server.js opgestart*/
+
+/**
+ * Module dependencies.
+ */
+
+//importeer module uit server.js
+var debug = require('debug')('geofeelings:server');
+var app = require('../server'); //d.i. onze express applicatie uit server.js
+var config = require('../config');
+var http = require('http');  //de http module toevoegen
+
+var server = http.createServer(app);
+
+//2. initialisaties
+app.set('port', process.env.PORT || 3000);
+
+var port = app.get('port');
+
+//2.1. (self) executing database connectie
+var DBService = require("../server/config/connectDBService.js");
+var connectDB = DBService(config.MONGODBURL, require('mongoose')); //connected mongoose
+
+//3. listeners voor server en io
+server.listen(app.get('port'), function () {
+    console.log('Express server listening on port :'+ app.get('port'));
+});
+
+
+server.on('error', onError);
+server.on('listening', onListening);
+
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
+
+
