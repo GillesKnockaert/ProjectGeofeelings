@@ -4,6 +4,10 @@ var gulpMocha = require('gulp-mocha');
 var env = require('gulp-env');
 var supertest = require('supertest');
 var less = require('gulp-less');
+var minifyCSS = require('gulp-minify-css');
+var sourcemaps = require('gulp-sourcemaps');
+var concat = require('gulp-concat');
+var gutil = require('gulp-util');
 
 gulp.task('nodemon', function(){
     nodemon({
@@ -48,6 +52,11 @@ gulp.task('test', function(){
 
 gulp.task('less', function () {
     return gulp.src("./public/css/*.less")
-        .pipe(less())
+        .pipe(less({
+            compress: true
+        }).on('error', gutil.log))
+        .pipe(minifyCSS({keepBreaks: false}))
+        .pipe(concat('geo.min.css'))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest("./public/dist/"));
 });
