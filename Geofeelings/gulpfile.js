@@ -60,3 +60,8 @@ gulp.task('less', function () {
         .pipe(sourcemaps.write())
         .pipe(gulp.dest("./public/dist/"));
 });
+
+
+gulp.task("watch", function () {
+    gulp.watch("./public/css/*.less", ["less"]);
+});
