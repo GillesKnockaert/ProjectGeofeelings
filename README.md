@@ -11,4 +11,8 @@ Geofeelings - A realtime happiness indicator
   1. development: gulp dev  --> uses local MongoDB
   2. production: gulp prod  --> uses remote MongoDB on MongoLab
 
+## Demo app on Heroku
+
+https://geo-feelings.herokuapp.com
+
 
