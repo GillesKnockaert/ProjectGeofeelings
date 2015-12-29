@@ -3,7 +3,7 @@
 var config = {
     HOST: 'http://localhost',
     PORT: getEnv('PORT') || 3000,
-    MONGODBURL : process.env.MONGO_URI,
+    MONGODBURL : process.env.MONGO_URI || 'mongodb://fgryspee:geofeelings@ds034198.mongolab.com:34198/geofeelings',
     SECRET : 'geofeelingssecret'  //om JSON Web Tokens te maken en verifiëren
 };
 
