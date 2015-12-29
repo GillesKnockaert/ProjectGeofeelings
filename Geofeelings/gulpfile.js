@@ -9,7 +9,6 @@ gulp.task('default', function(){
         script: 'bin/www',
         ext: 'js',
         env: {
-
         },
         ignore:['./node/modules/**']
     })

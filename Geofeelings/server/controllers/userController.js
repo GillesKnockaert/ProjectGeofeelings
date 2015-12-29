@@ -1,6 +1,7 @@
 /*controller that controls the different endpoints for the User model*/
 
-var userController = function(User){
+var userController = function(User, jwt){
+
     var postUser = function(req, res){
 
         if(!req.body.name){
@@ -13,18 +14,13 @@ var userController = function(User){
             res.send('Password is required');
             return;
         }
-        if(!req.body.email){
-            res.status(400);
-            res.send('Email is required');
-            return;
-        }
+
         //korter
         //var user = new User(req.body);
 
         //langer: nieuwe User maken met variabelen uit body
         var user = new User({
             name: req.body.name,
-            email: req.body.email,
             password: req.body.password
         });
 
@@ -78,23 +74,41 @@ var userController = function(User){
     }
 
     var authenticateUser = function(req,res){
-        if(!req.body.name || !req.body.password || !req.body.email){
-            res.json({ message: 'Error processing the request' });
+        var app = require('../../server');
+        //kijken of er een user name en password is doorgestuurd
+        if(!req.body.name || !req.body.password){
+            res.json({ success: false, message: 'Error processing the request' });
             return;
         }
+
+        //user opzoeken in de DB obv doorgestuurde user name
         User.findOne({name: req.body.name}, function(err, user){
             if(!user){
-                res.json({message: 'User doesn\'t exists'});
+                res.json({success: false, message: 'Authentication failed. User doesn\'t exists'});
                 return;
             }
+
+            //user gevonden
+            //checken of het password van de user overeen komt met het doorgestuurde password
             user.verifyPassword(req.body.password, function(err, isMatch){
                 if(err){
                     res.json({message: err});
                     return;
                 } else if(!isMatch){
-                    res.json({message: "Wrong password."});
+                    res.json({success: false, message: "Authentication failed. Wrong password."});
                 } else {
-                    res.json({success: "authenticated!"});
+                    //de gebruiker is gevonden en het paswoord is juist
+                    //token aanmaken
+                    var token = jwt.sign(user, app.get('secret'), {
+                        expiresIn: 86400 //expires in 24h
+                    });
+
+                    //return the information including token as JSON
+                    res.json({
+                        success: true,
+                        message: "User authenticated. Enjoy your token!",
+                        token : token
+                    });
                 }
             });
         });

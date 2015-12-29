@@ -19,7 +19,7 @@ module.exports = router;
 //test
 var routes = function(User, Status){
     var statusRouter = express.Router();
-    var authController = require('../controllers/auth')(User);
+    var authController = require('../controllers/authController')(User);
     var statusController = require('../controllers/statusController')(User, Status);
 
     statusRouter.route('/')

@@ -3,7 +3,7 @@ var passport = require('passport');
 
 var BasicStrategy = require('passport-http').BasicStrategy;
 var User = require('../models/user').userModel;
-
+/*
 passport.use(new BasicStrategy(
     function(username, password, next){
         User.findOne({name: username}, function(err, user){
@@ -34,7 +34,7 @@ passport.use(new BasicStrategy(
         });
     }
 ));
-
+*/
 //we create and export a function named isAuthenticated
 //we tell passport to use our basic strategy
 //we set session to false to not store session variables
@@ -79,6 +79,8 @@ var authController = function(User){
     ));
 
     var isAuthenticated = passport.authenticate('basic', { session : false });
+
+
 
     return {
         isAuthenticated: isAuthenticated

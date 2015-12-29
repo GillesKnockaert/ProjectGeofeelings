@@ -11,7 +11,7 @@
 
 //importeer module uit server.js
 var debug = require('debug')('geofeelings:server');
-var app = require('../app'); //d.i. onze express applicatie uit server.js
+var app = require('../server'); //d.i. onze express applicatie uit server.js
 var config = require('../config');
 var http = require('http');  //de http module toevoegen
 

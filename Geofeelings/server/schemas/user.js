@@ -12,15 +12,11 @@ var UserSchema =  new mongoose.Schema({
         unique: true,
         required: true
     },
-    email: {
-        type: String,
-        required: true,
-        match: /.+\@.+\..+/
-    },
     password:{
         type: String,
         required: true
     },
+    admin: Boolean,
     createdOn:{
         type: Date,
         default: Date.now()

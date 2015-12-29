@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="Geofeelings">
+<html lang="en" ng-app="geofeelings">
 
 <head>
 
@@ -11,19 +11,11 @@
 
     <title>Geofeelings</title>
 
-    <script src="js/vendor/angular/angular.js"></script>
-    <script src="/js/vendor/angular-route/angular-route.js"></script>
+    <script src="js/vendor/angular/angular.min.js"></script>
+    <script src="/js/vendor/angular-route/angular-route.min.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/controllers/UserController.js"></script>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="../css/geofeelings.css" rel="stylesheet" type="text/css">
-
-    <!-- Custom Fonts -->
-    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,11 +28,26 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
 
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../css/geofeelings.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+
+
 </head>
 
 <body ng-view>
 
 <!-- custom javascript for nav menu -->
 <script src="../js/sidebarnav.js"></script>
+
+
+
 </body>
 </html>

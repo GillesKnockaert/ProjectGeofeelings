@@ -8,9 +8,9 @@ router.route('/')
 module.exports = router;
 */
 //test
-var routes = function(User){
+var routes = function(User,jwt){
     var authRouter = express.Router();
-    var userController = require('../controllers/userController')(User);
+    var userController = require('../controllers/userController')(User, jwt);
 
     authRouter.route('/')
         .post(userController.authenticateUser);

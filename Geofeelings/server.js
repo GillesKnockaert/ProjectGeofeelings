@@ -6,8 +6,12 @@ var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var passport = require('passport');
 var bodyParser = require('body-parser');
+var jwt = require('jsonwebtoken');
+var expressJwt = require('express-jwt');
 
-//region ROUTES
+var config = require('./config');
+
+
 //endpoints API service vastleggen
 var frontendRoutes = require('./server/routes/indexRoute');
 var usersRoute = require('./server/routes/usersRoutes');
@@ -21,15 +25,16 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.set('secret', config.SECRET);
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 app.use(cookieParser());
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
-
 
 
 //mongoose models
@@ -38,11 +43,12 @@ var Status = require('./server/models/status');
 var Location = require('./server/models/location');
 
 //registreren van de routes
-app.use('/', frontendRoutes); //--> front end
-app.use('/api/users/', usersRoute(User));  //gebruik de usersRoute module voor alle routes die starten met /api/users
+
+app.use('/api/users/', usersRoute(User, jwt, app));  //gebruik de usersRoute module voor alle routes die starten met /api/users
 app.use('/api/status/', statusRoute(User, Status));
-app.use('/api/authenticate', authRoute(User));
+app.use('/api/authenticate', authRoute(User, jwt));
 app.use('/api/locations', locationsRoute(Location));
+app.use('*', frontendRoutes); //--> alle andere routes worden naar de front end gestuurd
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -52,8 +58,8 @@ app.use(function (req, res, next) {
 });
 
 //app is default een EventEmitter
-app.on("appMessage" , function (data) {
-    console.log("data " , data)
+app.on("appMessage", function (data) {
+    console.log("data ", data)
 })
 
 // error handlers
