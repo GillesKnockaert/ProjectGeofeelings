@@ -18,7 +18,7 @@ describe('User Controller Tests:', function(){
                 send: sinon.spy()
             }
 
-            var userController = require('../server/controllers/userController')(User);
+            var userController = require('../../server/controllers/userController')(User);
 
             userController.postUser(req,res);
 
@@ -41,7 +41,7 @@ describe('User Controller Tests:', function(){
                 send: sinon.spy()
             }
 
-            var userController = require('../server/controllers/userController')(User);
+            var userController = require('../../server/controllers/userController')(User);
 
             userController.postUser(req,res);
 

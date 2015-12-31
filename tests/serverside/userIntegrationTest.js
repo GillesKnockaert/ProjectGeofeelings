@@ -7,7 +7,7 @@ var app = ('../server.js');
 
 //var mongoose = require('mongoose');
 //var User = mongoose.model('User');
-var User = require('../server/models/user');
+var User = require('../../server/models/user');
 var agent = request.agent(app);
 
 describe('User CRUD Test', function(){
