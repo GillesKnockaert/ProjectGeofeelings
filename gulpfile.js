@@ -8,6 +8,9 @@ var minifyCSS = require('gulp-minify-css');
 var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat');
 var gutil = require('gulp-util');
+var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
+
 
 gulp.task('nodemon', function(){
     nodemon({
@@ -64,4 +67,10 @@ gulp.task('less', function () {
 
 gulp.task("watch", function () {
     gulp.watch("./public/css/*.less", ["less"]);
+});
+
+gulp.task('lint', function(){
+    return gulp.src('./server/**/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter(stylish));
 });
