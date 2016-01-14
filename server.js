@@ -38,9 +38,9 @@ app.use(passport.initialize());
 
 
 //mongoose models
-var User = require('./server/models/user');
-var Status = require('./server/models/status');
-var Location = require('./server/models/location');
+var User = require('./server/data/models/user');
+var Status = require('./server/data/models/status');
+var Location = require('./server/data/models/location');
 
 //registreren van de routes
 

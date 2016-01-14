@@ -43,12 +43,12 @@ var routes = function(User, jwt, app){
         .get(expressJWT({secret: app.get('secret')}), userController.getUsers);
 
     userRouter.route('/:user_id')
-        .get(userController.getUser)
+        .get(userController.getUser);
         //.put(userController.putUser);
         //.delete(userController.);
 
 
     return userRouter;
-}
+};
 
 module.exports = routes;
