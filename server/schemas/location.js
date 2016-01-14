@@ -5,8 +5,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var locationSchema = mongoose.Schema({
-    location:{
-        type:{
+    location: {
+        type: {
             type: String,
             default: 'Point'
         },
@@ -15,6 +15,10 @@ var locationSchema = mongoose.Schema({
     name: {
         type: String,
         required: true
+    },
+    createdOn: {
+        type: Date,
+        default: Date.now()
     }
 });
 
