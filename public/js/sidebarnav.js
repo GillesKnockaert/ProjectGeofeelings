@@ -3,21 +3,19 @@
  */
 
 // Scrolls to the selected menu item on the page
-$(function() {
+$(function () {
 
-    // Closes the sidebar menu
-    $("#menu-close").click(function(e) {
+    $(document).on('click', "#menu-toggle", function (e) {
         e.preventDefault();
         $("#sidebar-wrapper").toggleClass("active");
     });
 
-    // Opens the sidebar menu
-    $("#menu-toggle").click(function(e) {
+    $(document).on('click', "#menu-close", function (e) {
         e.preventDefault();
         $("#sidebar-wrapper").toggleClass("active");
     });
 
-    $('a[href*=#]:not([href=#])').click(function() {
+    $(document).on('click', "a[href*=#]:not([href=#])", function (e) {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
 
             var target = $(this.hash);
@@ -30,4 +28,5 @@ $(function() {
             }
         }
     });
+
 });

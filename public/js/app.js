@@ -1,38 +1,42 @@
 /**
  * Created by Frederic on 10/12/2015.
  */
-(function(){
-    var app = angular.module('geofeelings',['ngRoute']);
+(function () {
+    var app = angular.module('geofeelings', ['ngRoute']);
 
-    app.config(function($routeProvider){
+    app.config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: '../partials/index.html'
             })
-            .when('/instructions',{
+            .when('/instructions', {
                 templateUrl: '../partials/instructions.html'
             })
-            .when('/login',{
+            .when('/login', {
                 templateUrl: '../partials/login.html'
             })
             .otherwise({
                 redirectTo: '/'
             });
+
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });
     });
 
 
-
-    app.factory('authInterceptor', function($rootScope, $q, $window){
-        return{
-            request: function(config){
+    app.factory('authInterceptor', function ($rootScope, $q, $window) {
+        return {
+            request: function (config) {
                 config.headers = config.headers || {};
-                if($window.sessionStorage.token){
+                if ($window.sessionStorage.token) {
                     config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
                 }
                 return config;
             },
-            response: function(response){
-                if(response.status == 401){
+            response: function (response) {
+                if (response.status == 401) {
                     //handle the case where the user is not authenticated
                 }
                 return response || $q.when(response);
@@ -40,7 +44,7 @@
         };
     });
 
-    app.config(function($httpProvider){
+    app.config(function ($httpProvider) {
         $httpProvider.interceptors.push('authInterceptor');
     })
 
