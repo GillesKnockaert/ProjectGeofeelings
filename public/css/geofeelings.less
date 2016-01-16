@@ -218,8 +218,6 @@ hr.small {
       margin: 40px;
     }
   }
-
-
 }
 
 /* About */
@@ -280,20 +278,17 @@ footer {
   width: 100%;
   display: table;
   position: relative;
+  margin-bottom: 30px;
   h1{
     font-size: 3em;
   }
 }
 .instruction{
   max-width: 500px;
-  margin: auto;
-
+  margin:auto;
   img{
-    max-width: 200px;
-  }
-  p, h2{
-    text-align: left;
-    max-width: 200px;
+    max-width: 150px;
+    max-height: 150px;
   }
 }
 
@@ -318,24 +313,8 @@ footer {
 .middlePart{
   color: @LightFontColor;
   background-color: @MainBackgroundColor;
+  padding: 30px 0 30px 0;
 }
-
-//.instructionEven{
-//  img{
-//    margin: auto;
-//    max-width: 250px;
-//    @media screen  and (max-width: 400px) {
-//      width: 100px;
-//    }
-//    //max-width: 200px;
-//  }
-//  p, h2{
-//    margin: auto;
-//    max-width: 300px;
-//    margin-bottom: 10px;
-//  }
-//}
-
 .text-vertical-center2 {
   //background-color: rgba(0, 0, 0, 0.3);
   display: table-cell;
@@ -352,6 +331,11 @@ footer {
   -moz-background-size: cover;
   background-size: cover;
   -o-background-size: cover;
+}
+
+.hideme
+{
+  opacity:0;
 }
 
 /* make keyframes that tell the start state and the end state of our object */

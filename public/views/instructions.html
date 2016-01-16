@@ -19,7 +19,8 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../css/geofeelings.css" rel="stylesheet">
+    <link href="../dist/geo.min.css" rel="stylesheet">
+    <!--<link href="../css/geofeelings.css" rel="stylesheet">-->
 
     <!-- Custom Fonts -->
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -31,6 +32,10 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="../js/jquery.js"></script>
+    <script src="../js/instructionsScroll.js"></script>
+
+
 
 </head>
 
@@ -42,81 +47,121 @@
         <hr class="small">
         <div>
                 <img class="img-responsive" src="../img/mapPin.png">
-
-            <h2>Hey there!</h2>
-            <p> Welcome at Geofeelings</p>
-            <p>Geofeelings is a webapp where you can share you’re emotional status among friends and others.</p>
-            <p>Take your time to look at our instructions below before you take a leap in the unknown</p>
+            <div>
+                <h2>Hey there!</h2>
+                <p> Welcome at Geofeelings</p>
+                <p>Geofeelings is a webapp where you can share you’re emotional status among friends and others.</p>
+                <p>Take your time to look at our instructions below before you take a leap in the unknown</p>
+            </div>
+            <a href="index.html" class="btn-primary btn">Skip this</a>
         </div>
     </div>
 </section>
 
 <section class="instructionPart">
-    <div class="text-vertical-center2 container fade-in">
-        <h1>Let's get started</h1>
+    <div class="text-vertical-center2 container">
+        <h1 class="hideme">Let's get started</h1>
         <hr class="small">
-        <div class="row instruction">
-            <img class="img-responsive col-lg-6 col-md-6 col-xs-6" src="../img/register.png">
-            <div class="col-lg-6 col-md-6 col-xs-6">
+        <div class="instruction">
+
+            <div class="col-lg-12 col-md-12 col-xs-12 center-block text-center hideme">
                 <h2>1. Get yourself registered</h2>
                 <p>Start by registering your account. You can also chose not to register but then not all features will be available</p>
+                <img src="../img/register.png">
             </div>
 
-            <div class="col-lg-6 col-md-6 col-xs-6">
+            <div class="col-lg-12 col-md-12 col-xs-12 center-block text-center hideme">
                 <h2>2. Show others how you feel</h2>
                 <p>After registering, you can show others yours emotional status by clicking one of the smileys who resemble to your emotional status</p>
+                <img src="../img/smileys.png">
             </div>
-            <img class="img-responsive col-lg-3 col-md-3 col-xs-3" src="../img/happy.png">
-            <img class="img-responsive col-lg-3 col-md-3 col-xs-3" src="../img/sad.png">
+
         </div>
     </div>
 </section>
+
+
 
 <section class="instructionPart middlePart">
-    <div class="text-vertical-center2 container fade-in">
-        <h1>Almost there</h1>
+    <div class="text-vertical-center2 container">
+        <h1 class="hideme">Almost there</h1>
         <hr class="small">
-        <div class="row instruction">
-            <img class="img-responsive col-lg-6 col-md-6 col-xs-6" src="../img/form.png">
-            <div class="col-lg-6 col-md-6 col-xs-6">
+        <div class="instruction">
+
+            <div class="col-lg-12 col-md-12 col-xs-12 center-block text-center hideme">
                 <h2>3. Fill out the form</h2>
-                <p>After you picked a smiley fill out the form. Others wanne know why you are happy or not happy. When you fill in the form, you will also be able to add your location to it.</p>
+                <p>After you picked a smiley fill out the form. Others wanne know why you are happy or not happy.
+                    When you fill in the form, you will also be able to add your location to it.</p>
+                <img src="../img/form.png">
             </div>
-            <div class="col-lg-6 col-md-6 col-xs-6">
+
+            <div class="col-lg-12 col-md-12 col-xs-12 center-block text-center hideme">
                 <h2>4. connect with others</h2>
-                <p>Now that you sucesfully shared your status, connect with others so your status gets noticed.</p>
-                <p>When you added youre friends you can even start a conversation with them</p>
+                <p>Now that you sucesfully shared your status, connect with others so your status gets noticed.
+                    When you added youre friends you can even start a conversation with them</p>
+                <img src="../img/connection.png">
             </div>
-            <img class="img-responsive col-lg-6 col-md-6 col-xs-6" src="../img/connection.png">
+
         </div>
     </div>
 </section>
+
+
 
 <section class="instructionPart">
-    <div class="text-vertical-center2 container fade-in">
-        <h1>One last step</h1>
+    <div class="text-vertical-center2 container">
+        <h1 class="hideme">One last step</h1>
         <hr class="small">
-        <div class="row instruction">
-            <img class="img-responsive col-lg-6 col-md-6 col-xs-6" src="../img/map.png">
-            <div class="col-lg-6 col-md-6 col-xs-6">
+        <div class="instruction">
+
+            <div class="col-lg-12 col-md-12 col-xs-12 center-block text-center hideme">
                 <h2>5. Take a look at the map</h2>
-                <p>When you take a look at the map, you can see all the other peaple that use geofeelings.</p>
-                <p>Apply filters to show only your friends or to narrow the map down to radius of your choise.</p>
+                <p>When you take a look at the map, you can see all the other peaple that use geofeelings.
+                    Apply filters to show only your friends or to narrow the map down to radius of your choise.</p>
+                <img src="../img/map.png">
             </div>
 
-            <div class="col-lg-6 col-md-6 col-xs-6">
+            <div class="col-lg-12 col-md-12 col-xs-12 center-block text-center hideme">
                 <h2>6. Explore for yourself</h2>
-                <p>There is a lot more to explore so find out for yourself. and don’t forget to tell your friends</p>
-                <p>If you read this, you are ready to jump into action Go to the full site and explore what else you can do.</p>
+                <p>There is a lot more to explore so find out for yourself. and don’t forget to tell your friends
+                    If you read this, you are ready to jump into action Go to the full site and explore what else you can do.</p>
+                <img src="../img/magnifyingGlass.png">
             </div>
-            <img class="img-responsive col-lg-6 col-md-6 col-xs-6" src="../img/magnifyingGlass.png">
+            <a href="index.html" class="btn-primary btn hideme">Continue to geofeelings</a>
         </div>
     </div>
 </section>
 
 
-<!-- Footer -->
+
+<!-- Footer
 <footer id="contact" ng-include="'../partials/footer.html'">
+</footer>
+-->
+
+<footer id="contact">
+    <div class="container hideme">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 text-center">
+                <h4><strong>Geofeelings</strong></h4>
+                <p>Created By:</p>
+                <p><i class="fa fa-user fa-fw"></i> Frederic gryspeerdt</p>
+                <p><i class="fa fa-user fa-fw"></i> Gilles Knockaert</p>
+
+                <br>
+                <ul class="list-inline">
+                    <li>
+                        <a href="https://www.facebook.com/"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
+                    </li>
+                </ul>
+                <hr class="small">
+                <p class="text-muted">Copyright &copy; Geofeelings</p>
+            </div>
+        </div>
+    </div>
 </footer>
 
 <!-- jQuery -->

@@ -238,6 +238,7 @@ footer a:hover {
   width: 100%;
   display: table;
   position: relative;
+  margin-bottom: 30px;
 }
 .instructionPart h1 {
   font-size: 3em;
@@ -247,12 +248,8 @@ footer a:hover {
   margin: auto;
 }
 .instruction img {
-  max-width: 200px;
-}
-.instruction p,
-.instruction h2 {
-  text-align: left;
-  max-width: 200px;
+  max-width: 150px;
+  max-height: 150px;
 }
 .instructionHeader {
   background-color: #1b6d85;
@@ -276,6 +273,7 @@ footer a:hover {
 .middlePart {
   color: #fff;
   background-color: #1b6d85;
+  padding: 30px 0 30px 0;
 }
 .text-vertical-center2 {
   display: table-cell;
@@ -291,6 +289,9 @@ footer a:hover {
 }
 .backgroundimg .text-vertical-center2 {
   background-color: rgba(0, 0, 0, 0.3);
+}
+.hideme {
+  opacity: 0;
 }
 /* make keyframes that tell the start state and the end state of our object */
 @-webkit-keyframes fadeIn {
