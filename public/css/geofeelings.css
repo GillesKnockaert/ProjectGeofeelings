@@ -232,6 +232,14 @@ footer a {
 footer a:hover {
   color: #b0b0b0;
 }
+/* ------------------ modals ------------------ */
+.registerform {
+  margin: 0 20px 20px 20px;
+}
+.registerform button {
+  width: 70px;
+  margin: auto;
+}
 /* ------------------ Instructions ------------------ */
 .instructionPart {
   height: 100%;
