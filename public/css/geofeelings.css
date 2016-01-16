@@ -1,6 +1,9 @@
 /** Contains all the variables we use such as color definitions,....  **/
 /* COLORS */
 /* Global Styles */
+a:focus {
+  outline: none;
+}
 html,
 body {
   width: 100%;

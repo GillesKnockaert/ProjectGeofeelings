@@ -24,7 +24,7 @@
             <label class="label" for="txtPassword">Password</label>
             <input type="text" class="form-control" id="txtPassword" placeholder="Password...">
             <input type="button"  class="btn-primary btn" id="btnLogin" value="Login">
-            <input type="button" class="btn-primary btn" id="btnRegister" data-toggle="modal" data-target="#myModal" value="Register">
+            <input type="button" class="btn-primary btn" id="btnRegister" data-toggle="modal" data-target="#registerModal" value="Register">
         </fieldset>
 
         <div class="text-vertical-center">
@@ -32,8 +32,8 @@
             <h3>Geofeelings a webapp that shows how you really feel.</h3>
 
             <div>
-                <a href="#"><img class="img-responsive" src="../img/happy.png"></a>
-                <a href="#"><img class="img-responsive" src="../img/sad.png"></a>
+                <a href="#" data-toggle="modal" data-target="#statusModal"><img class="img-responsive" src="../img/happy.png"></a>
+                <a href="#" data-toggle="modal" data-target="#statusModal"><img class="img-responsive" src="../img/sad.png"></a>
             </div>
         </div>
     </header>
@@ -90,10 +90,9 @@
     </section>
 
 
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<!---------- Modal Register ---------->
+<div id="registerModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -139,6 +138,37 @@
                 </form>
             </div>
         </div>
+    </div>
+</div>
 
+<!---------- Modal Status ---------->
+<div id="statusModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">You are .....!</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal registerform" action='' method="POST">
+                    <fieldset>
+                        <!-- reason -->
+                        <div class="form-group">
+                            <label for="Reason">Why do you feel ....?</label>
+                            <textarea class="form-control" id="Reason" rows="3" placeholder="..."></textarea>
+                        </div>
+
+                        <!-- Button -->
+                        <div class="control-group">
+                            <div class="controls text-center">
+                                <button class="btn btn-success">Submit</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
     </div>
 </div>

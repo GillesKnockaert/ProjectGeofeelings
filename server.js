@@ -14,7 +14,7 @@ var config = require('./config');
 var frontendRoutes = require('./server/routes/indexRoute');
 var usersRoute = require('./server/routes/usersRoutes');
 var statusRoute = require('./server/routes/statusRoutes');
-var authRoute = require('./server/routes/authRoutes');
+//var authRoute = require('./server/routes/authRoutes');
 var locationsRoute = require('./server/routes/locationsRoutes');
 
 var app = express();
