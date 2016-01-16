@@ -16,7 +16,10 @@ var UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    admin: Boolean,
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
     isContactable: Boolean,
     createdOn: {
         type: Date,

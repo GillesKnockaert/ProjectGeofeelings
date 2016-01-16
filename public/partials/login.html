@@ -1,12 +1,32 @@
-<h1>Login</h1>
+<!--<h1>Login</h1>
 <div ng-controller="UserController">
     <form ng-submit="submit()">
         <input ng-model="user.name" type="text" name="user" placeholder="Username"/>
         <input ng-model="user.password" type="password" name="pass" placeholder="Password"/>
-        <input type="submit" value="Login" />
+        <input type="submit" value="Login"/>
     </form>
     <button type="submit" ng-click="getUsers()">Haal users op</button>
     <p ng-bind="message"></p>
-
-
 </div>
+-->
+
+<fieldset ng-controller="UserController as user">
+    <form ng-submit="user.submit()" novalidate class="css-form">
+        <input type="text" ng-model="user.user.name" class="form-control" placeholder="Username..." required>
+        <input type="password" ng-model="user.user.password" class="form-control" id="txtPassword" placeholder="Password..." required>
+        <input type="submit" class="btn-primary btn" id="btnLogin" value="Login">
+    </form>
+
+    <p>user = {{user.user | json}}</p>
+    <p>{{user.message}}</p>
+</fieldset>
+
+<style type="text/css">
+    .css-form input.ng-invalid.ng-touched {
+        background-color: #FA787E;
+    }
+
+    .css-form input.ng-valid.ng-touched {
+        background-color: #78FA89;
+    }
+</style>

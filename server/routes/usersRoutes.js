@@ -1,54 +1,85 @@
 var express = require('express');
+var router = express.Router();
+var userController = require('../controllers/userController');
+var authController = require('../controllers/authController');
+var util = require('util');
+var expressJwt = require('express-jwt');
 
-var routes = function(User, jwt, app){
-    var userRouter = express.Router();
-    var userController = require('../controllers/userController')(User);
-    var authController = require('../controllers/authController')(User);
-    var expressJWT = require('express-jwt');
-    /*
-    userRouter.use(function(req,res,next){
-        // check header or url parameters or post parameters for token
-        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+router.route('/register')
+    .post(function (req, res, next) {
+        userController.registerUser(req, res, function (error, user) {
+            if (error) {
+                console.log("Error registering user");
+                //res.send('There have been registering errors: ' + util.inspect(error), 400);
+                return next(error);
+            }
 
-        // decode token
-        if (token) {
-
-            // verifies secret and checks exp
-            jwt.verify(token, app.get('secret'), function(err, decoded) {
-                if (err) {
-                    return res.json({ success: false, message: 'Failed to authenticate token.' });
-                } else {
-                    // if everything is good, save to request for use in other routes
-                    req.decoded = decoded;
-                    next();
-                }
+            console.log("Success registering user");
+            //res.send('Success registering new user: ' + util.inspect(user), 201);
+            res.status(201).json({
+                status: 201,
+                data: user
             });
 
-        } else {
-
-            // if there is no token
-            // return an error
-            return res.status(403).send({
-                success: false,
-                message: 'No token provided.'
-            });
-
-        }
+        });
     });
-    */
-
-    userRouter.route('/')
-        .post(userController.postUser)
-        //.get(authController.isAuthenticated, userController.getUsers);
-        .get(expressJWT({secret: app.get('secret')}), userController.getUsers);
-
-    userRouter.route('/:user_id')
-        .get(userController.getUser);
-        //.put(userController.putUser);
-        //.delete(userController.);
 
 
-    return userRouter;
-};
+router.route('/login')
+    .post(function (req, res, next) {
+        userController.authenticateUser(req, res, function (error, token) {
+            if (error) {
+                console.log("Error logging in user");
+                //res.send('There has been an error logging in: ' + util.inspect(error), 400);
+                return next(error);
+            }
 
-module.exports = routes;
+            console.log("Success logging in user");
+            //res.send('Success logging in user: ' + util.inspect(user), 201);
+            res.status(200).json({
+                status: 200,
+                data : token
+            });
+
+        });
+    });
+
+router.route('/')
+    .get(authController.authenticateReq, authController.isAdmin, function (req, res) {
+
+        userController.getUsers(function (error, users) {
+            if (error) {
+                res.json(error);
+            }
+
+            res.json(users);
+        });
+    });
+
+/*
+ var routes = function (User, jwt, app) {
+ var userRouter = express.Router();
+ var userController = require('../controllers/userController')(User);
+ var authController = require('../controllers/authController')(User);
+ var expressJWT = require('express-jwt');
+ var util = require('util');
+
+ userRouter.route('/')
+ //.post(userController.registerUser)
+ //.get(authController.isAuthenticated, userController.getUsers);
+ .get(expressJWT({secret: app.get('secret')}), userController.getUsers);
+
+ userRouter.route('/:user_id')
+ .get(userController.getUser);
+ //.put(userController.putUser);
+ //.delete(userController.);
+
+
+ });
+
+
+ return userRouter;
+ };
+ */
+
+module.exports = router;

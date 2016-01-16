@@ -6,11 +6,9 @@ var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var passport = require('passport');
 var bodyParser = require('body-parser');
-var jwt = require('jsonwebtoken');
-var expressJwt = require('express-jwt');
+var validator = require('express-validator');
 
 var config = require('./config');
-
 
 //endpoints API service vastleggen
 var frontendRoutes = require('./server/routes/indexRoute');
@@ -35,20 +33,31 @@ app.use(cookieParser());
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
+app.use(validator([]));
 
-
-//mongoose models
-var User = require('./server/data/models/user');
-var Status = require('./server/data/models/status');
-var Location = require('./server/data/models/location');
 
 //registreren van de routes
 
-app.use('/api/users/', usersRoute(User, jwt, app));  //gebruik de usersRoute module voor alle routes die starten met /api/users
-app.use('/api/status/', statusRoute(User, Status));
-app.use('/api/authenticate', authRoute(User, jwt));
-app.use('/api/locations', locationsRoute(Location));
+app.use('/api/users/', usersRoute);  //gebruik de usersRoute module voor alle routes die starten met /api/users
+//app.use('/api/status/', statusRoute(User, Status));
+//app.use('/api/authenticate', authRoute(User, jwt));
+//app.use('/api/locations', locationsRoute(Location));
 app.use('*', frontendRoutes); //--> alle andere routes worden naar de front end gestuurd
+
+
+// only use this error handler middleware in "/api" based routes
+app.use("/api", function(err, req, res, next){
+
+    // use the error's status or default to 500
+    res.status(err.status || 500);
+
+    // send back json data
+    res.json({
+        status: err.status,
+        data: null,
+        message: err.message
+    });
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -85,6 +94,8 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
+
+
 
 
 module.exports = app;

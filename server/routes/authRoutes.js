@@ -1,14 +1,7 @@
-var express = require('express');
-//var router = express.Router();
-//var userController = require('../controllers/userController');
-/*
-router.route('/')
-    .post(userController.authenticateUser);
 
-module.exports = router;
-*/
-//test
+
 var routes = function(User,jwt){
+    var express = require('express');
     var authRouter = express.Router();
     var userController = require('../controllers/userController')(User, jwt);
 
