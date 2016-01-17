@@ -243,6 +243,11 @@ footer a:hover {
   width: 70px;
   margin: auto;
 }
+#mapstatus {
+  height: 200px;
+  width: auto;
+  margin-bottom: 10px;
+}
 /* ------------------ Instructions ------------------ */
 .instructionPart {
   height: 100%;

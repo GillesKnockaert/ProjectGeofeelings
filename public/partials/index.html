@@ -32,8 +32,8 @@
             <h3>Geofeelings a webapp that shows how you really feel.</h3>
 
             <div>
-                <a href="#" data-toggle="modal" data-target="#statusModal"><img class="img-responsive" src="../img/happy.png"></a>
-                <a href="#" data-toggle="modal" data-target="#statusModal"><img class="img-responsive" src="../img/sad.png"></a>
+                <a href="#" data-toggle="modal" id="btnhappy" data-target="#statusModal"><img class="img-responsive" src="../img/happy.png"></a>
+                <a href="#" data-toggle="modal" id="btnsad" data-target="#statusModal"><img class="img-responsive" src="../img/sad.png"></a>
             </div>
         </div>
     </header>
@@ -159,16 +159,39 @@
                             <textarea class="form-control" id="Reason" rows="3" placeholder="..."></textarea>
                         </div>
 
+                        <!-- map -->
+                        <div id="mapstatus"></div>
+
                         <!-- Button -->
                         <div class="control-group">
                             <div class="controls text-center">
                                 <button class="btn btn-success">Submit</button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                             </div>
-        </div>
+                        </div>
                     </fieldset>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+
+
+        $('#statusModal').on('shown.bs.modal', function(){
+            //setTimeout(function() {
+
+                var mapstatus = L.map('mapstatus').setView([50, 5], 13);
+                L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                    //id: 'mapbox.mapbox-streets-v6',
+                    id: 'gillesknockaert.ongk0729',
+                    //accessToken: 'pk.eyJ1IjoiZ2lsbGVza25vY2thZXJ0IiwiYSI6ImNpamlmNjZ6dTAydjN0eWx0cWRpaHRodncifQ.4YXUSLdA-h7IAtflMQjz4Q'
+                    accessToken: 'pk.eyJ1IjoiZ2lsbGVza25vY2thZXJ0IiwiYSI6ImNpamllenNmczAyd2l0aG01bjRnbnpndDAifQ.SFHo6SL-fytksGkN-NvHUQ'
+                }).addTo(mapstatus);
+
+                //mapstatus.invalidateSize();
+            //}, 10);
+        });
+
+</script>
