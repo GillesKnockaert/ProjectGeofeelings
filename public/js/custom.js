@@ -24,17 +24,19 @@ $(document).on('click', "#btnhappy,#btnsad", function () {
         var lc = L.control.locate().addTo(mapstatus);
         lc.start();
 
-        // bij cancel de map verwijderen
         $(document).on('click', "#cancelStatus", function () {
-            var lng = mapstatus.getCenter();
-            var lat;
-
-
+            var lng = mapstatus.getCenter().toString().replace(" ","").split(/[(\/,)]/)[2];
+            var lat = mapstatus.getCenter().toString().replace(" ","").split(/[(\/,)]/)[1];;
+            console.log("lng = " + lng);
+            console.log("lat = " + lat);
             console.log(mapstatus.getCenter());
         });
 
-        // bij submit de map clearen en coordinaten doorgeven
         $(document).on('click', "#submitStatus", function () {
+            var lng = mapstatus.getCenter().toString().replace(" ","").split(/[(\/,)]/)[2];
+            var lat = mapstatus.getCenter().toString().replace(" ","").split(/[(\/,)]/)[1];;
+            alert(lng);
+            alert(lat);
             console.log(mapstatus.getCenter());
         });
     });
