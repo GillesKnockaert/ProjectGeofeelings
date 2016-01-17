@@ -21,8 +21,12 @@
     <![endif]-->
     <!-- jQuery -->
     <script src="../js/jquery.js"></script>
+
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
+    <!-- leaflet css and js-->
+    <link href="../css/leaflet.css" rel="stylesheet">
+    <link href="../css/leafletLocate.min.css" rel="stylesheet">
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -39,9 +43,11 @@
 </head>
 
 <body>
-<div id="main">
-    <div ng-view></div>
-</div>
+
+<span ng-view>
+
+</span>
+
 
 
 <footer id="contact">
@@ -73,9 +79,6 @@
 </footer>
 
 
-<!-- script voor navbar -->
-<script src="../js/sidebarnav.js"></script>
-
 <script src="js/vendor/angular/angular.min.js"></script>
 <script src="/js/vendor/angular-route/angular-route.min.js"></script>
 
@@ -85,7 +88,8 @@
 <script src="/js/register/registerController.js"></script>
 <script src="/js/main/mainController.js"></script>
 
-
-
+<script src="../js/custom.js"></script>
+<script src="../js/leaflet.js"></script>
+<script src="../js/leafletLocate.min.js"></script>
 </body>
 </html>

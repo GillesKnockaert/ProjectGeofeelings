@@ -1,6 +1,9 @@
 /** Contains all the variables we use such as color definitions,....  **/
 /* COLORS */
 /* Global Styles */
+a:focus {
+  outline: none;
+}
 html,
 body {
   width: 100%;
@@ -239,6 +242,14 @@ footer a:hover {
 .registerform button {
   width: 70px;
   margin: auto;
+}
+#mapstatus {
+  height: 300px;
+  width: auto;
+  margin-bottom: 10px;
+}
+.leaflet-control-locate a {
+  padding: 0px;
 }
 /* ------------------ Instructions ------------------ */
 .instructionPart {
