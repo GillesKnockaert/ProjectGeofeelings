@@ -39,9 +39,10 @@
 </head>
 
 <body>
-<div ng-view>
-
+<div id="main">
+    <div ng-view></div>
 </div>
+
 
 <footer id="contact">
     <div class="container">
@@ -51,7 +52,7 @@
 
                 <p>Created By:</p>
 
-                <p><i class="fa fa-user fa-fw"></i> Frederic gryspeerdt</p>
+                <p><i class="fa fa-user fa-fw"></i> Frederic Gryspeerdt</p>
 
                 <p><i class="fa fa-user fa-fw"></i> Gilles Knockaert</p>
 
@@ -77,8 +78,14 @@
 
 <script src="js/vendor/angular/angular.min.js"></script>
 <script src="/js/vendor/angular-route/angular-route.min.js"></script>
+
 <script src="/js/app.js"></script>
 <script src="/js/controllers/UserController.js"></script>
+<script src="/js/services/authService.js"></script>
+<script src="/js/register/registerController.js"></script>
+<script src="/js/main/mainController.js"></script>
+
+
 
 </body>
 </html>

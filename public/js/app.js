@@ -4,16 +4,19 @@
 (function () {
     var app = angular.module('geofeelings', ['ngRoute']);
 
-    app.config(function ($routeProvider, $locationProvider) {
+    app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: '../partials/index.html'
             })
+            .when('/main', {
+                templateUrl: '../js/main/main.html'
+            })
             .when('/instructions', {
                 templateUrl: '../partials/instructions.html'
             })
-            .when('/login', {
-                templateUrl: '../partials/login.html'
+            .when('/register', {
+                templateUrl: '../js/register/register.html'
             })
             .otherwise({
                 redirectTo: '/'
@@ -23,8 +26,7 @@
             enabled: true,
             requireBase: false
         });
-    });
-
+    }]);
 
     app.factory('authInterceptor', function ($rootScope, $q, $window) {
         return {

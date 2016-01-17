@@ -16,8 +16,8 @@
                 .post('/api/users/login', self.user)
                 .success(function (data, status, headers, config) {
                     $window.sessionStorage.token = data.data.token;
-                    if(!data.status == 200){
-                        self.message = 'Login failed';
+                    if(!status == 200){
+                        return false;
                     } else {
                         self.message = 'Welcome ' + self.user.name;
                     }
@@ -43,6 +43,8 @@
 
         }
     });
+
+
 
 })(angular.module('geofeelings'));
 
