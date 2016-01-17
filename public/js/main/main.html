@@ -1,29 +1,40 @@
 <div ng-controller="MainController as vm">
-    <section id="login" ng-hide="vm.isUserLoggedIn">
+    <section id="login">
         <!-- Header -->
         <header id="top" class="header">
             <div class="text-vertical-center">
                 <h1>GEOFEELINGS</h1>
 
-                <h3>A webapp that shows you how the world really feels.</h3>
+                <h3 ng-hide="vm.isUserLoggedIn">A webapp that shows you how the world really feels.</h3>
             </div>
 
+
+            <fieldset ng-hide="vm.isUserLoggedIn">
+                <label class="label" for="txtUsername">Username</label>
+                <input ng-model="vm.userCredentials.name" type="text" class="form-control" id="txtUsername"
+                       placeholder="Username..." required>
+                <label class="label" for="txtPassword">Password</label>
+                <input ng-model="vm.userCredentials.password" type="text" class="form-control" id="txtPassword"
+                       placeholder="Password..." required>
+                <input type="button" class="btn-primary btn" id="btnLogin" value="Login" ng-click="vm.logIn()">
+                <input type="button" class="btn-primary btn" id="btnRegister" data-toggle="modal" data-target="#myModal"
+                       value="Register">
+            </fieldset>
+
+
+            <div class="text-vertical-center" ng-show="vm.isUserLoggedIn">
+                <h2 ng-show="vm.isUserLoggedIn">Click on a smiley to share your feelings</h2>
+
+                <div>
+                    <a href="#" data-toggle="modal" id="btnhappy" data-target="#statusModal"><img class="img-responsive"
+                                                                                                  src="../img/happy.png"></a>
+                    <a href="#" data-toggle="modal" id="btnsad" data-target="#statusModal"><img class="img-responsive"
+                                                                                                src="../img/sad.png"></a>
+                </div>
+            </div>
         </header>
-        <fieldset>
-            <label class="label" for="txtUsername">Username</label>
-            <input ng-model="vm.userCredentials.name" type="text" class="form-control" id="txtUsername" placeholder="Username..." required>
-            <label class="label" for="txtPassword">Password</label>
-            <input ng-model="vm.userCredentials.password" type="text" class="form-control" id="txtPassword" placeholder="Password..." required>
-            <input type="button" class="btn-primary btn" id="btnLogin" value="Login" ng-click="vm.logIn()">
-            <input type="button" class="btn-primary btn" id="btnRegister" data-toggle="modal" data-target="#myModal"
-                   value="Register">
-        </fieldset>
     </section>
 
-
-    <section id="status" ng-show="vm.isUserLoggedIn">
-        <h1>Status</h1>
-    </section>
 
     <section id="dashboardGuest" ng-hide="vm.isUserLoggedIn">
         <h2>DashboardGuest</h2>
@@ -39,64 +50,105 @@
     </section>
 
     <section id="dashboardUser" ng-show="vm.isUserLoggedIn">
-        <h1>Dashboard</h1>
+        <h1>Dashboard User</h1>
     </section>
 
-    <section id="register">
-        <!-- Modal -->
-        <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+    <section id="Connections" ng-show="vm.isUserLoggedIn">
+        <h1>Connections user</h1>
+    </section>
 
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Let's get you registered</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal registerform" method="POST" ng-submit="vm.register()">
-                            <fieldset>
-                                <!-- Username -->
-                                <div class="form-group">
-                                    <label for="username">Username</label>
-                                    <input ng-model="vm.userRegistration.name" type="text" class="form-control" id="username" placeholder="Username">
-                                </div>
 
-                                <!-- Password -->
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input ng-model="vm.userRegistration.password" type="password" class="form-control" id="password" placeholder="Password">
-                                </div>
+    <!---------- Modal Register ---------->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
-                                <!-- Password -->
-                                <div class="form-group">
-                                    <label for="confirmpassword">Confirm password</label>
-                                    <input type="password" class="form-control" id="confirmpassword"
-                                           placeholder="Confirm password">
-                                </div>
-
-                                <!-- can contact -->
-                                <div class="form-group">
-                                    <label>
-                                        <input ng-model="vm.userRegistration.isContactable" id="cancontact" type="checkbox"> Other users may contact me
-                                    </label>
-                                </div>
-
-                                <!-- Button -->
-                                <div class="control-group">
-                                    <div class="controls text-center">
-                                        <button class="btn btn-success">Register</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Let's get you registered</h4>
                 </div>
+                <div class="modal-body">
+                    <form class="form-horizontal registerform" method="POST" ng-submit="vm.register()">
+                        <fieldset>
+                            <!-- Username -->
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input ng-model="vm.userRegistration.name" type="text" class="form-control"
+                                       id="username" placeholder="Username">
+                            </div>
 
+                            <!-- Password -->
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input ng-model="vm.userRegistration.password" type="password" class="form-control"
+                                       id="password" placeholder="Password">
+                            </div>
+
+                            <!-- Password -->
+                            <div class="form-group">
+                                <label for="confirmpassword">Confirm password</label>
+                                <input type="password" class="form-control" id="confirmpassword"
+                                       placeholder="Confirm password">
+                            </div>
+
+                            <!-- can contact -->
+                            <div class="form-group">
+                                <label>
+                                    <input ng-model="vm.userRegistration.isContactable" id="cancontact" type="checkbox">
+                                    Other users may contact me
+                                </label>
+                            </div>
+
+                            <!-- Button -->
+                            <div class="control-group">
+                                <div class="controls text-center">
+                                    <button class="btn btn-success">Register</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!---------- Modal Status ---------->
+    <div id="statusModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">You are .....!</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal registerform" action='' method="POST">
+                        <fieldset>
+                            <!-- reason -->
+                            <div class="form-group">
+                                <label for="Reason">Why do you feel ....?</label>
+                                <textarea class="form-control" id="Reason" rows="3" placeholder="..."></textarea>
+                            </div>
+
+                            <!-- map -->
+                            <div id="mapstatus"></div>
+
+                            <!-- Button -->
+                            <div class="control-group">
+                                <div class="controls text-center">
+                                    <button class="btn btn-success">Submit</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
             </div>
         </div>
+    </div>
 
-    </section>
 </div>
 
