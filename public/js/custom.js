@@ -4,8 +4,6 @@
 
 // --------------------- map js ---------------------------
 $(document).on('click', "#btnhappy,#btnsad", function () {
-    var latitude;
-    var longitude;
     $('#statusModal').on('shown.bs.modal', function () {
         var mapstatus = L.map('mapstatus'); //.setView([50, 5], 13)
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -13,40 +11,34 @@ $(document).on('click', "#btnhappy,#btnsad", function () {
             accessToken: 'pk.eyJ1IjoiZ2lsbGVza25vY2thZXJ0IiwiYSI6ImNpamllenNmczAyd2l0aG01bjRnbnpndDAifQ.SFHo6SL-fytksGkN-NvHUQ'
         }).addTo(mapstatus);
 
-        //--- zonder control ---
-        //mapstatus.locate({setView: true, Zoom: 13});
+        // Disable drag and zoom handlers.
+        mapstatus.dragging.disable();
+        mapstatus.touchZoom.disable();
+        mapstatus.doubleClickZoom.disable();
+        mapstatus.scrollWheelZoom.disable();
+        mapstatus.keyboard.disable();
+        // Disable tap handler, if present.
+        if (mapstatus.tap) mapstatus.tap.disable();
 
         //--- met control ---
-        //var lc = L.control.locate().addTo(mapstatus);
-        //var marker = L.marker([e.latitude, e.longitude]);
-        //lc.start();
+        var lc = L.control.locate().addTo(mapstatus);
+        lc.start();
 
+        $(document).on('click', "#cancelStatus", function () {
+            var lng = mapstatus.getCenter().toString().replace(" ","").split(/[(\/,)]/)[2];
+            var lat = mapstatus.getCenter().toString().replace(" ","").split(/[(\/,)]/)[1];;
+            console.log("lng = " + lng);
+            console.log("lat = " + lat);
+            console.log(mapstatus.getCenter());
+        });
 
-
-        //geeft de correcte coordinaten weer
-        mapstatus.locate({setView: true, watch: true}) /* This will return map so you can do chaining */
-            .on('locationfound', function(e){
-                latitude = e.latitude
-                longitude = e.longitude
-                alert(latitude + " " + longitude);
-                var marker = L.marker([e.latitude, e.longitude]).bindPopup('Your are here :)');
-                var circle = L.circle([e.latitude, e.longitude], e.accuracy/2, {
-                    weight: 1,
-                    color: 'blue',
-                    fillColor: '#cacaca',
-                    fillOpacity: 0.2
-                });
-                mapstatus.addLayer(marker);
-                mapstatus.addLayer(circle);
-            })
-            .on('locationerror', function(e){
-                console.log(e);
-                alert("Location access denied.");
-            });
-
-
-
-
+        $(document).on('click', "#submitStatus", function () {
+            var lng = mapstatus.getCenter().toString().replace(" ","").split(/[(\/,)]/)[2];
+            var lat = mapstatus.getCenter().toString().replace(" ","").split(/[(\/,)]/)[1];;
+            alert(lng);
+            alert(lat);
+            console.log(mapstatus.getCenter());
+        });
     });
 });
 

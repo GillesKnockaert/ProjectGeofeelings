@@ -6,30 +6,31 @@
                 <h1>GEOFEELINGS</h1>
 
                 <h3 ng-hide="vm.isUserLoggedIn">A webapp that shows you how the world really feels.</h3>
-            </div>
 
 
-            <fieldset ng-hide="vm.isUserLoggedIn">
-                <label class="label" for="txtUsername">Username</label>
-                <input ng-model="vm.userCredentials.name" type="text" class="form-control" id="txtUsername"
-                       placeholder="Username..." required>
-                <label class="label" for="txtPassword">Password</label>
-                <input ng-model="vm.userCredentials.password" type="text" class="form-control" id="txtPassword"
-                       placeholder="Password..." required>
-                <input type="button" class="btn-primary btn" id="btnLogin" value="Login" ng-click="vm.logIn()">
-                <input type="button" class="btn-primary btn" id="btnRegister" data-toggle="modal" data-target="#myModal"
-                       value="Register">
-            </fieldset>
+
+                <fieldset ng-hide="vm.isUserLoggedIn">
+                    <label class="label" for="txtUsername">Username</label>
+                    <input ng-model="vm.userCredentials.name" type="text" class="form-control" id="txtUsername"
+                           placeholder="Username..." required>
+                    <label class="label" for="txtPassword">Password</label>
+                    <input ng-model="vm.userCredentials.password" type="text" class="form-control" id="txtPassword"
+                           placeholder="Password..." required>
+                    <input type="button" class="btn-primary btn" id="btnLogin" value="Login" ng-click="vm.logIn()">
+                    <input type="button" class="btn-primary btn" id="btnRegister" data-toggle="modal" data-target="#myModal"
+                           value="Register">
+                </fieldset>
 
 
-            <div class="text-vertical-center" ng-show="vm.isUserLoggedIn">
-                <h2 ng-show="vm.isUserLoggedIn">Click on a smiley to share your feelings</h2>
+                <div ng-show="vm.isUserLoggedIn">
+                    <h2 ng-show="vm.isUserLoggedIn">Click on a smiley to share your feelings</h2>
 
-                <div>
-                    <a href="#" data-toggle="modal" id="btnhappy" data-target="#statusModal"><img class="img-responsive"
-                                                                                                  src="../img/happy.png"></a>
-                    <a href="#" data-toggle="modal" id="btnsad" data-target="#statusModal"><img class="img-responsive"
-                                                                                                src="../img/sad.png"></a>
+                    <div>
+                        <a href="#" data-toggle="modal" id="btnhappy" data-target="#statusModal"><img class="img-responsive"
+                                                                                                      src="../img/happy.png"></a>
+                        <a href="#" data-toggle="modal" id="btnsad" data-target="#statusModal"><img class="img-responsive"
+                                                                                                    src="../img/sad.png"></a>
+                    </div>
                 </div>
             </div>
         </header>
@@ -139,8 +140,8 @@
                             <!-- Button -->
                             <div class="control-group">
                                 <div class="controls text-center">
-                                    <button class="btn btn-success">Submit</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button id="submitStatus" class="btn btn-success">Submit</button>
+                                    <button id="cancelStatus" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </fieldset>
