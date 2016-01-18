@@ -1,184 +1,283 @@
 /*statuscontroller.js
-* --> controller that controls the different endpoints for the Status model*/
+ * --> controller that controls the different endpoints for the Status model*/
 /*
-//Load Status model
-var Status = require('../models/status');
-var User = require('../models/user').userModel;
-var mongoose = require('../../node_modules/mongoose');
+ //Load Status model
+ var Status = require('../models/status');
+ var User = require('../models/user').userModel;
+ var mongoose = require('../../node_modules/mongoose');
 
 
-//region POST status
-//create endpoint /api/status for POSTS
-exports.postStatus = function(req, res){
-    //create a new instance of the status model
-    var status = new Status();
+ //region POST status
+ //create endpoint /api/status for POSTS
+ exports.postStatus = function(req, res){
+ //create a new instance of the status model
+ var status = new Status();
 
-    //Set the Status properties that came from the POST data
-    console.log(req.body.message);
-    console.log(req.body.latitude);
-    console.log(req.body.longitude);
+ //Set the Status properties that came from the POST data
+ console.log(req.body.message);
+ console.log(req.body.latitude);
+ console.log(req.body.longitude);
 
-    status.longitude = req.body.longitude;
-    status.latitude = req.body.latitude;
-    status.message = req.body.message;
+ status.longitude = req.body.longitude;
+ status.latitude = req.body.latitude;
+ status.message = req.body.message;
 
-    //passport will automatically set the user in req.user
-    status.userId = req.user._id;
+ //passport will automatically set the user in req.user
+ status.userId = req.user._id;
 
-    //save the status and check for errors
-    status.save(function(err){
-        if(err){
-            res.send(err);
-            return;
-        }
+ //save the status and check for errors
+ status.save(function(err){
+ if(err){
+ res.send(err);
+ return;
+ }
 
-        res.json({
-            success: 'Status added succesfully',
-            data: status
-        });
-    });
-};
-//endregion
+ res.json({
+ success: 'Status added succesfully',
+ data: status
+ });
+ });
+ };
+ //endregion
 
-//region GET status
-//create endpoint /api/status for GET
-exports.getStatuses = function(req, res){
-    //use the Status model to find all statuses
-    //from a particular user with their username
-    Status.find({}).lean().exec(function(err, statuses){
-        if(err){
-            res.send(err);
-            return;
-        }
+ //region GET status
+ //create endpoint /api/status for GET
+ exports.getStatuses = function(req, res){
+ //use the Status model to find all statuses
+ //from a particular user with their username
+ Status.find({}).lean().exec(function(err, statuses){
+ if(err){
+ res.send(err);
+ return;
+ }
 
-        //We want to set the username on each status by looking
-        //up the userId in the User documents.
-        //
-        //Because of mongoose asynchronism, we will have to wait
-        //to get all the results from the queries on the User model
-        //We can send them when we have iterated
-        //through every status (counter === l)
+ //We want to set the username on each status by looking
+ //up the userId in the User documents.
+ //
+ //Because of mongoose asynchronism, we will have to wait
+ //to get all the results from the queries on the User model
+ //We can send them when we have iterated
+ //through every status (counter === l)
 
-        var counter = 0;
-        var l = statuses.length;
+ var counter = 0;
+ var l = statuses.length;
 
-        //create a closure to have access to the status
-        var closure = function(status){
-            return function(err, user){
-                counter++;
+ //create a closure to have access to the status
+ var closure = function(status){
+ return function(err, user){
+ counter++;
 
-                if(err){
-                    res.send(err);
-                }
+ if(err){
+ res.send(err);
+ }
 
-                status.username = user.name;
+ status.username = user.name;
 
-                //when all the users have been set
-                if(counter === l){
-                    //respond
-                    res.json(statuses);
-                    return;
-                }
-            };
-        };
-        //We iterate through all statuses to find their associated
-        //username.
-        for (var i = 0; i < l; i++) {
-            User.findById(statuses[i].userId, closure(statuses[i]));
-        }
-    });
-};
-//endregion
+ //when all the users have been set
+ if(counter === l){
+ //respond
+ res.json(statuses);
+ return;
+ }
+ };
+ };
+ //We iterate through all statuses to find their associated
+ //username.
+ for (var i = 0; i < l; i++) {
+ User.findById(statuses[i].userId, closure(statuses[i]));
+ }
+ });
+ };
+ //endregion
 
-//region GET a single status
-//create endpoint /api/statuses/:status_id for GET
-exports.getStatus = function(req, res){
-    //use the status model to find a specific status
-    console.log(req.user._id);
-    Status.find({
-        userId: req.user._id,
-        _id: req.params.status_id
-    }, function(err, status){
-        if(err){
-            res.send(err);
-        }
-        res.json(status);
-    });
-};
-//endregion
+ //region GET a single status
+ //create endpoint /api/statuses/:status_id for GET
+ exports.getStatus = function(req, res){
+ //use the status model to find a specific status
+ console.log(req.user._id);
+ Status.find({
+ userId: req.user._id,
+ _id: req.params.status_id
+ }, function(err, status){
+ if(err){
+ res.send(err);
+ }
+ res.json(status);
+ });
+ };
+ //endregion
 
-//region UPDATE a single status
-//create endpoint /api/statuses/:status_id for PUT
-exports.putStatus = function(req,res){
-    //use the Status model to find a specific status
-    Status.update({
-        userId: req.user._id,
-        _id: req.params.status_id
-    },{
-        message: req.body.message
-    }, function(err, num, raw){
-        if(err){
-            res.send(err);
-        }
-        res.json({
-            message: 'message updated'
-        });
-    });
-};
-//endregion
+ //region UPDATE a single status
+ //create endpoint /api/statuses/:status_id for PUT
+ exports.putStatus = function(req,res){
+ //use the Status model to find a specific status
+ Status.update({
+ userId: req.user._id,
+ _id: req.params.status_id
+ },{
+ message: req.body.message
+ }, function(err, num, raw){
+ if(err){
+ res.send(err);
+ }
+ res.json({
+ message: 'message updated'
+ });
+ });
+ };
+ //endregion
 
-//region DELETE a single status
-// Create endpoint /api/statuses/:status_id for DELETE
-exports.deleteStatus = function(req, res) {
-    // Use the Status model to find a specific status and remove it
-    Status.remove({
-        userId: req.user._id,
-        _id: req.params.status_id
-    }, function(err) {
-        if (err)
-            res.status(500).send(err);
+ //region DELETE a single status
+ // Create endpoint /api/statuses/:status_id for DELETE
+ exports.deleteStatus = function(req, res) {
+ // Use the Status model to find a specific status and remove it
+ Status.remove({
+ userId: req.user._id,
+ _id: req.params.status_id
+ }, function(err) {
+ if (err)
+ res.status(500).send(err);
 
-        res.status(204).json({
-            message: 'Status deleted'
-        });
-    });
-};
-*/
+ res.status(204).json({
+ message: 'Status deleted'
+ });
+ });
+ };
+ */
 //test
-var statusController = function(User, Status){
+var statusController = (function () {
     //var ObjectId = require('mongoose').Types.ObjectId;
+    var User = require('../data/models/user');
+    var Status = require('../data/models/status');
+    var Location = require('../data/models/location');
 
-    var postStatus = function(req, res){
-        //create a new instance of the status model
-        var status = new Status();
+    var httpErrors = require('httperrors');
 
-        //Set the Status properties that came from the POST data
+    var postStatus = function (req, res, next) {
+        /*
+         var _locationJSON = {
+         name: "Thuis",
+         location: {
+         coordinates: [3.1264686584472656,
+         50.95733868495295]
+         }
+         };
 
-        status.mood = req.body.mood;
-        status.message = req.body.message;
+         var _locationSerialize = JSON.stringify(_locationJSON);
+         */
 
-        //passport will automatically set the user in req.user
-        status._creator = req.user._id;
+        //0. validate the client side input
+        req.checkBody('_creator', 'UserID is required.').notEmpty();
+        req.checkBody('message', 'Message is required.').notEmpty();
+        req.checkBody('mood', 'Mood is required.').notEmpty();
+        //req.checkBody('latitude', 'Latitude is required').notEmpty();
+        //req.checkBody('longitude', 'Longitude is required').notEmpty();
+        //req.checkBody('locationName', 'LocationName is required').notEmpty();
+        req.checkBody('_location', 'LocationName is required').notEmpty();
 
-        //save the status and check for errors
-        status.save(function(err){
-            if(err){
-                res.send(err);
-                return;
-            }
+        // check the validation object for errors
+        var errors = req.validationErrors();
 
-            res.json({
-                success: 'Status added succesfully',
-                data: status
+
+        if (errors) {
+            var err = httpErrors(400);
+            err.message = "All fields are required.";
+            return next(err, null);
+
+        } else {
+            //no client side errors
+            //1. save location
+
+            var jsonLocation = JSON.parse(req.body._location);
+            /*
+            var newLocation = new Location({
+                name: jsonLocation.name,
+                location: {
+                    coordinates: [jsonLocation.location[0],jsonLocation.location[1]]
+                }
             });
-        });
+            */
+
+            Location.create(jsonLocation, function (err, newLocation) {
+            //newLocation.save(function(err, newLocation){
+                if (err) {
+                    var error = httpErrors(500);
+                    error.message = "Something went wrong while saving the location.";
+                    return next(error, null);
+                } else {
+                    //location is saved
+                    //2. save status
+                    //2.1 make status object
+                    var newStatus = {
+                        _creator: req.body._creator,
+                        mood: req.body.mood,
+                        message: req.body.message,
+                        _location: newLocation
+                    };
+
+                    //2.2
+                    Status.create(newStatus, function (err, newStatus) {
+                        if (err) {
+                            var error = httpErrors(500);
+                            error.message = "Something went wrong while saving the status.";
+                            return next(error, null);
+                        } else {
+                            return next(null, newStatus);
+                        }
+                    });
+                }
+            });
+        }
+
+            /*
+            //2. save status
+
+            //req.body._location = _location;
+            var status = req.body;
+
+            Status.create(status, function (err) {
+                if (err) {
+                    var error = httpErrors(500);
+                    error.message = "Something went wrong while saving the status.";
+                    return next(error, null);
+                } else {
+                    return next(null, status);
+                }
+            });
+            */
+
+            /*
+         //create a new instance of the status model
+         var status = new Status();
+
+         //Set the Status properties that came from the POST data
+
+         status.mood = req.body.mood;
+         status.message = req.body.message;
+
+         //passport will automatically set the user in req.user
+         status._creator = req.body._id;
+
+         //save the status and check for errors
+         status.save(function (err) {
+         if (err) {
+         res.send(err);
+         return;
+         }
+
+         res.json({
+         success: 'Status added succesfully',
+         data: status
+         });
+         });
+         */
     }
 
-    var getStatuses = function(req, res){
+    var getStatuses = function (req, res) {
         //use the Status model to find all statuses
         //from a particular user with their username
-        Status.find({}).lean().exec(function(err, statuses){
-            if(err){
+        Status.find({}).lean().exec(function (err, statuses) {
+            if (err) {
                 res.send(err);
                 return;
             }
@@ -195,18 +294,18 @@ var statusController = function(User, Status){
             var l = statuses.length;
 
             //create a closure to have access to the status
-            var closure = function(status){
-                return function(err, user){
+            var closure = function (status) {
+                return function (err, user) {
                     counter++;
 
-                    if(err){
+                    if (err) {
                         res.send(err);
                     }
 
                     status.username = user.name;
 
                     //when all the users have been set
-                    if(counter === l){
+                    if (counter === l) {
                         //respond
                         res.json(statuses);
                         return;
@@ -221,7 +320,7 @@ var statusController = function(User, Status){
         });
     }
 
-    var getStatus = function(req, res){
+    var getStatus = function (req, res) {
         //use the status model to find a specific status
 
         var status_id = req.params.status_id;
@@ -231,23 +330,23 @@ var statusController = function(User, Status){
         Status.find({
             userId: req.user._id,
             _id: status_id
-        }, function(err, status){
-            if(err){
+        }, function (err, status) {
+            if (err) {
                 res.send(err);
             }
             res.json(status);
         });
     }
 
-    var putStatus = function(req, res){
+    var putStatus = function (req, res) {
         //use the Status model to find a specific status
         Status.update({
             userId: req.user._id,
             _id: req.params.status_id
-        },{
+        }, {
             message: req.body.message
-        }, function(err, num, raw){
-            if(err){
+        }, function (err, num, raw) {
+            if (err) {
                 res.send(err);
             }
             res.json({
@@ -256,12 +355,12 @@ var statusController = function(User, Status){
         });
     }
 
-    var deleteStatus = function(req, res){
+    var deleteStatus = function (req, res) {
         // Use the Status model to find a specific status and remove it
         Status.remove({
             userId: req.user._id,
             _id: req.params.status_id
-        }, function(err) {
+        }, function (err) {
             if (err)
                 res.status(500).send(err);
 
@@ -278,6 +377,6 @@ var statusController = function(User, Status){
         putStatus: putStatus,
         deleteStatus: deleteStatus
     }
-}
+})();
 
 module.exports = statusController;

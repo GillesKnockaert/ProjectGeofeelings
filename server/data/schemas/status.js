@@ -5,9 +5,10 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var statusSchema = mongoose.Schema({
+var StatusSchema = new mongoose.Schema({
     _creator: {
-        type: Schema.Types.ObjectId, ref: 'User'
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
     mood: String,
     message: String,
@@ -21,4 +22,4 @@ var statusSchema = mongoose.Schema({
     }
 });
 
-module.exports = statusSchema;
+module.exports = StatusSchema;

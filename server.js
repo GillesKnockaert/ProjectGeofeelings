@@ -38,7 +38,7 @@ app.use(validator([]));
 //registreren van de routes
 
 app.use('/api/users/', usersRoute);  //gebruik de usersRoute module voor alle routes die starten met /api/users
-//app.use('/api/status/', statusRoute(User, Status));
+app.use('/api/status/', statusRoute);
 //app.use('/api/authenticate', authRoute(User, jwt));
 //app.use('/api/locations', locationsRoute(Location));
 app.use('*', frontendRoutes); //--> alle andere routes worden naar de front end gestuurd

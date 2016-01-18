@@ -3,7 +3,11 @@
     var StatusController = function ($scope) {
         var vm = this;
 
-        vm.status = {};
+        vm.status = {
+            mood : "happy",
+            message: "",
+            location: ""
+        };
 
         return {};
     };
