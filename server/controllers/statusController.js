@@ -169,7 +169,7 @@ var statusController = (function () {
         //0. validate the client side input
         req.checkBody('_creator', 'UserID is required.').notEmpty();
         req.checkBody('message', 'Message is required.').notEmpty();
-        req.checkBody('mood', 'Mood is required.').notEmpty();
+        req.checkBody('isHappy', 'Mood is required.').notEmpty();
         //req.checkBody('latitude', 'Latitude is required').notEmpty();
         //req.checkBody('longitude', 'Longitude is required').notEmpty();
         //req.checkBody('locationName', 'LocationName is required').notEmpty();
@@ -201,7 +201,7 @@ var statusController = (function () {
                     //2.1 make status object
                     var newStatus = {
                         _creator: req.body._creator,
-                        mood: req.body.mood,
+                        mood: req.body.isHappy,
                         message: req.body.message,
                         _location: newLocation
                     };
@@ -316,15 +316,50 @@ var statusController = (function () {
                 message: 'Status deleted'
             });
         });
-    }
+    };
+
+    var getAllStatus = function (cb) {
+        Status.find({})
+            .lean()
+            .exec(function (err, status) {
+                if (err) {
+                    var error = httpErrors(404);
+                    //error.message = "Could not find user.";
+                    return cb(error, null);
+                }
+
+                var options = [
+                    {
+                        path: '_creator',
+                        model: 'User',
+                        options: {lean: true}
+                    },
+                    {
+                        path: '_location',
+                        model: 'Location',
+                        options: {lean: true}
+                    }
+                ];
+
+                Status.populate(status,options,function(err, status){
+                    if (err) {
+                        var error = httpErrors(404);
+                        error.message = "Could not find status.";
+                        return cb(error, null);
+                    }
+                    return cb(null, status);
+                });
+            });
+    };
 
     return {
         postStatus: postStatus,
         getStatuses: getStatuses,
         getStatus: getStatus,
         putStatus: putStatus,
-        deleteStatus: deleteStatus
-    }
+        deleteStatus: deleteStatus,
+        getAllStatus: getAllStatus
+    };
 })();
 
 module.exports = statusController;

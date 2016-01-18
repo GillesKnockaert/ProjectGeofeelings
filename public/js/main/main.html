@@ -1,27 +1,27 @@
-<div ng-controller="MainController as vm">
+<div ng-controller="MainController as vmMain">
     <section id="login">
         <!-- Header -->
         <header id="top" class="header">
             <div class="text-vertical-center">
                 <h1>GEOFEELINGS</h1>
 
-                <h3 ng-hide="vm.isUserLoggedIn">A webapp that shows you how the world really feels.</h3>
+                <h3 ng-hide="vmMain.isUserLoggedIn">A webapp that shows you how the world really feels.</h3>
 
-                <fieldset ng-hide="vm.isUserLoggedIn">
+                <fieldset ng-hide="vmMain.isUserLoggedIn">
                     <label class="label" for="txtUsername">Username</label>
-                    <input ng-model="vm.userCredentials.name" type="text" class="form-control" id="txtUsername"
+                    <input ng-model="vmMain.userCredentials.name" type="text" class="form-control" id="txtUsername"
                            placeholder="Username..." required>
                     <label class="label" for="txtPassword">Password</label>
-                    <input ng-model="vm.userCredentials.password" type="text" class="form-control" id="txtPassword"
+                    <input ng-model="vmMain.userCredentials.password" type="text" class="form-control" id="txtPassword"
                            placeholder="Password..." required>
-                    <input type="button" class="btn-primary btn" id="btnLogin" value="Login" ng-click="vm.logIn()">
+                    <input type="button" class="btn-primary btn" id="btnLogin" value="Login" ng-click="vmMain.logIn()">
                     <input type="button" class="btn-primary btn" id="btnRegister" data-toggle="modal" data-target="#myModal"
                            value="Register">
                 </fieldset>
 
 
-                <div ng-show="vm.isUserLoggedIn">
-                    <h2 ng-show="vm.isUserLoggedIn">Click on a smiley to share your feelings</h2>
+                <div ng-show="vmMain.isUserLoggedIn">
+                    <h2 ng-show="vmMain.isUserLoggedIn">Click on a smiley to share your feelings</h2>
 
                     <div>
                         <a href="#" data-toggle="modal" id="btnhappy" data-target="#statusModal"><img class="img-responsive"
@@ -38,20 +38,16 @@
   ng-controller="dashboardController"
 -------->
 
-    <section id="dashboardGuest" class="container" ng-hide="vm.isUserLoggedIn">
-        <h2 class="text-center">DashboardGuest</h2>
+    <section id="dashboardGuest" class="container" ng-hide="vmMain.isUserLoggedIn">
+        <h2 class="text-center">Real-time happiness map</h2>
         <hr class="small">
-        <p>Hier komt de map die beschikbaar is voor alle niet-ingelogde gebruikers</p>
-        <ul>
-            <li>wereldkaart met alle 'pins' (locaties)</li>
-            <li>controls om data te manipuleren/filteren</li>
-            <li>statistieken tonen na filteren</li>
-            <li>kan zelf geen statussen posten, vrienden toevoegen, ...</li>
-        </ul>
-
+        <div id="mapDashboardGuest" ng-controller="GuestMapController as vmGuestMap">
+            <leaflet width='100%' height='400' layers="layers" markers="markers"></leaflet>
+        </div>
     </section>
 
-    <section id="dashboardUser" class="container" ng-show="vm.isUserLoggedIn" ng-controller="DashboardController">
+
+    <section id="dashboardUser" class="container" ng-show="vmMain.isUserLoggedIn" ng-controller="DashboardController as vmDashboard">
         <h2 class="text-center">Dashboard</h2>
         <hr class="small">
         <div id="mapDashboard"></div>
@@ -86,7 +82,7 @@
             });
 
             //hier moeten de markers opgemaakt worden die verwachten een lng, lat, userstatus en een bericht
-            //L.marker([location.latitude, location.longtitude], {icon: mood}).addTo(mapDashboard).bindPopup("user : " + "message");
+            //L.marker([location.latitude, location.longtitude], {icon: isHappy}).addTo(mapDashboard).bindPopup("user : " + "message");
 
             L.marker([51.13215, 3.02534], {icon: happy}).addTo(mapDashboard).bindPopup("locatie 1");
             L.marker([51.15215, 3.02534], {icon: sad}).addTo(mapDashboard).bindPopup("locatie 2");
@@ -101,7 +97,7 @@
 
     </section>
 
-    <section class="container" id="Connections" ng-show="vm.isUserLoggedIn">
+    <section class="container" id="Connections" ng-show="vmMain.isUserLoggedIn">
         <h2 class="text-center">Connections user</h2>
         <hr class="small">
     </section>
@@ -118,19 +114,19 @@
                     <h4 class="modal-title">Let's get you registered</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal registerform" method="POST" ng-submit="vm.register()">
+                    <form class="form-horizontal registerform" method="POST" ng-submit="vmMain.register()">
                         <fieldset>
                             <!-- Username -->
                             <div class="form-group">
                                 <label for="username">Username</label>
-                                <input ng-model="vm.userRegistration.name" type="text" class="form-control"
+                                <input ng-model="vmMain.userRegistration.name" type="text" class="form-control"
                                        id="username" placeholder="Username">
                             </div>
 
                             <!-- Password -->
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input ng-model="vm.userRegistration.password" type="password" class="form-control"
+                                <input ng-model="vmMain.userRegistration.password" type="password" class="form-control"
                                        id="password" placeholder="Password">
                             </div>
 
@@ -144,7 +140,7 @@
                             <!-- can contact -->
                             <div class="form-group">
                                 <label>
-                                    <input ng-model="vm.userRegistration.isContactable" id="cancontact" type="checkbox">
+                                    <input ng-model="vmMain.userRegistration.isContactable" id="cancontact" type="checkbox">
                                     Other users may contact me
                                 </label>
                             </div>

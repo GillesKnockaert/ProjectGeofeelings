@@ -21,12 +21,28 @@ router.route('/')
             });
         });
     })
-    //.get(statusController.getStatuses);
+
+    .get(function (req, res, next) {
+        statusController.getAllStatus(function (error, status) {
+            if (error) {
+                console.log("Error finding status");
+                //res.send('There has been an error logging in: ' + util.inspect(error), 400);
+                return next(error);
+            }
+
+            console.log("Success finding status");
+            //res.send('Success logging in user: ' + util.inspect(user), 201);
+            res.status(200).json({
+                status: 200,
+                data: status
+            });
+        });
+    })
 
 //router.route('/:status_id')
-    //.get(authController.authenticateReq, statusController.getStatus)
-    //.put(authController.authenticateReq, statusController.putStatus)
-    //.delete(authController.authenticateReq, statusController.deleteStatus);
+//.get(authController.authenticateReq, statusController.getStatus)
+//.put(authController.authenticateReq, statusController.putStatus)
+//.delete(authController.authenticateReq, statusController.deleteStatus);
 
 module.exports = router;
 

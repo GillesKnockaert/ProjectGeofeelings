@@ -15,8 +15,9 @@
                 var userConnections = [];
 
                 angular.forEach(rawUser.status, function (status, key) {
-
+                    //Location(statusId,name,longitude, latitude)
                     var newLocation = new Location(
+                        status._location._id,
                         status._location.name,
                         status._location.location.coordinates[0],//longitude
                         status._location.location.coordinates[1] //latitude
@@ -24,7 +25,7 @@
 
                     var newStatus = new Status();
                     newStatus.user = userId;
-                    newStatus.mood = status.mood;
+                    newStatus.isHappy = status.isHappy;
                     newStatus.message = status.message;
                     newStatus.createdOn = status.createdOn;
                     newStatus.location = newLocation;
@@ -55,15 +56,48 @@
 
                 return user;
 
-            }, function (error) {
-                return error;
             });
+        };
+
+        var getAllStatus = function(){
+            var url = "/api/status";
+            return $http.get(url).then(function (response) {
+                //success
+                //return user data
+                var rawStatus = response.data.data;
+
+                var userStatus = [];
+
+                angular.forEach(rawStatus, function (status, key) {
+                    //Location(statusId,name,longitude, latitude)
+                    var newLocation = new Location(
+                        status._location._id,
+                        status._location.name,
+                        status._location.location.coordinates[0],//longitude
+                        status._location.location.coordinates[1] //latitude
+                    );
+
+                    var newStatus = new Status();
+                    newStatus.user = status._creator._id;
+                    newStatus.isHappy = status.isHappy;
+                    newStatus.message = status.message;
+                    newStatus.createdOn = status.createdOn;
+                    newStatus.location = newLocation;
+
+                    userStatus.push(newStatus);
+                });
+
+                return userStatus;
+
+            });
+
         };
 
 
         return {
-            getAllUserData: getAllUserData
-        }
+            getAllUserData: getAllUserData,
+            getAllStatus : getAllStatus
+        };
     };
 
 

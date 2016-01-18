@@ -2,7 +2,7 @@
  * Created by Frederic on 10/12/2015.
  */
 (function () {
-    var app = angular.module('geofeelings', ['ngRoute']);
+    var app = angular.module('geofeelings', ['ngRoute','leaflet-directive']);
 
     app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider
@@ -13,7 +13,7 @@
                 templateUrl: '../js/main/main.html'
             })
             .when('/instructions', {
-                templateUrl: '../partials/instructions.html'
+                templateUrl: '../views/instructions.html'
             })
             .when('/register', {
                 templateUrl: '../js/register/register.html'

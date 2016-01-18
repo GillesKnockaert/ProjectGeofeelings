@@ -10,7 +10,7 @@ var StatusSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    mood: String,
+    isHappy: Boolean,
     message: String,
     createdOn:{
         type: Date,

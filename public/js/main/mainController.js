@@ -20,7 +20,7 @@
 
         $rootScope.$on('login', function (e, userId) {
             vm.isUserLoggedIn = true;
-            $window.location.href = '/main.html';
+            //$window.location.href = '/main';
         });
 
 
@@ -30,7 +30,7 @@
                     console.log('successful login');
                     //user info uit token ophalen
                     //vm.user = authService.getTokenInfo();
-                    $window.location.href = '/main';
+                    //$window.location.href = '/main';
                     //userService.getAllUserData(vm.user._id);
 
                 } else {

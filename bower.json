@@ -30,6 +30,6 @@
     "jquery": "latest",
     "angular": "latest",
     "angular-route": "latest",
-    "bootstrap": "latest"
+    "angular-leaflet-directive": "~0.10.0"
   }
 }
