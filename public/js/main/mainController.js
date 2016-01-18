@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    var MainController = function ($scope, $window, authService) {
+    var MainController = function ($scope, $window, $rootScope, authService, userService) {
         var vm = this;
 
         vm.userCredentials = {
@@ -18,19 +18,20 @@
         vm.isUserLoggedIn = authService.isLoggedIn();
 
 
-        if (vm.isUserLoggedIn) {
-            //when user is logged in --> fetch his data from the api
+        $rootScope.$on('login', function (e, userId) {
+            vm.isUserLoggedIn = true;
+            $window.location.href = '/main.html';
+        });
 
-        }
 
         vm.logIn = function () {
             authService.logIn(vm.userCredentials).then(function (response) {
                 if (response.success) {
                     console.log('successful login');
                     //user info uit token ophalen
-                    vm.user = authService.getTokenInfo();
-                    vm.isUserLoggedIn = true;
-                    //$window.location.href = '/main';
+                    //vm.user = authService.getTokenInfo();
+                    $window.location.href = '/main';
+                    //userService.getAllUserData(vm.user._id);
 
                 } else {
                     console.log('Error login');
@@ -44,8 +45,8 @@
                     console.log('Successful registration');
 
                     //user info uit token ophalen
-                    vm.user = authService.getTokenInfo();
-                    vm.isUserLoggedIn = true;
+                    //vm.user = authService.getTokenInfo();
+                    //vm.isUserLoggedIn = true;
 
                     //$window.location.href = '/main.html';
 
@@ -57,6 +58,6 @@
     };
 
     angular.module("geofeelings")
-        .controller("MainController", ["$scope", "$window", "AuthService", MainController]);
+        .controller("MainController", ["$scope", "$window", "$rootScope", "AuthService", "UserService", MainController]);
 
 })();

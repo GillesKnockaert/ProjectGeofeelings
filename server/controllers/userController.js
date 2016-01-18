@@ -16,19 +16,76 @@ var UserController = (function () {
         });
     };
 
-    var getUser = function (req, res) {
+    var getAllUserData = function (req, res, cb) {
         var user_id = req.params.user_id;
 
         User.findById(user_id)
-            .populate('connections status')
+            .lean()
+            //.populate('connections status')
+            .populate({path: "status"})
             .exec(function (err, user) {
                 if (err) {
-                    res.status(500).json({message: 'Could not find user'});
-                    return;
+                    var error = httpErrors(404);
+                    error.message = "Could not find user.";
+                    return cb(error, null);
                 }
-                res.json(user);
+
+                var options = [
+                    {
+                        path: 'status._location',
+                        model: 'Location',
+                        options: {lean: true}
+                    },
+                    {
+                        path: 'connections',
+                        model: 'User',
+                        options: {lean: true}
+                    }
+                ];
+
+                User.populate(user, options, function (err, user) {
+                    if (err) {
+                        var error = httpErrors(404);
+                        error.message = "Could not find user.";
+                        return cb(error, null);
+                    }
+                    return cb(null, user);
+                });
+
             });
-    }
+    };
+
+    var getUserConnections = function (req, res, cb) {
+        var user_id = req.params.user_id;
+
+        User.findById(user_id)
+            .lean()
+            .select('connections')
+            .exec(function (err, user) {
+                if (err) {
+                    var error = httpErrors(404);
+                    error.message = "Could not find connections.";
+                    return cb(err, null);
+                }
+
+                var options = [
+                    {
+                        path: 'connections',
+                        model: 'User',
+                        options: {lean: true}
+                    }
+                ];
+
+                User.populate(user, options, function (err, connections) {
+                    if (err) {
+                        var error = httpErrors(404);
+                        error.message = "Could not find user.";
+                        return cb(error, null);
+                    }
+                    return cb(null, connections);
+                });
+            });
+    };
 
     var updateUser = function (req, res) {
 
@@ -121,8 +178,9 @@ var UserController = (function () {
     return {
         registerUser: registerUser,
         getUsers: getUsers,
-        getUser: getUser,
-        authenticateUser: authenticateUser
+        getAllUserData: getAllUserData,
+        authenticateUser: authenticateUser,
+        getUserConnections: getUserConnections
     }
 })();
 

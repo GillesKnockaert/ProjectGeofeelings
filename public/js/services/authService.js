@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    var AuthService = function ($window, $http) {
+    var AuthService = function ($window, $http, $rootScope) {
 
         var logIn = function (userCredentials) {
             var url = "/api/users/login";
@@ -9,6 +9,9 @@
             return $http.post(url, userCredentials).then(function (response) {
                 $window.sessionStorage.token = response.data.data;
                 response.success = true;
+
+                $rootScope.$emit('login', getUserId());
+
                 return response;
             }, function (error) {
                 delete $window.sessionStorage.token;
@@ -52,6 +55,17 @@
 
         };
 
+        var getUserId = function(){
+            var userId;
+
+            var userToken = getTokenInfo();
+
+            userId = userToken._id;
+
+            return userId;
+        }
+
+
         var saveToken = function (expToken) {
             $window.sessionStorage.token = expToken;
         };
@@ -69,5 +83,5 @@
     };
 
 
-    angular.module("geofeelings").factory("AuthService", ["$window", "$http", AuthService]);
+    angular.module("geofeelings").factory("AuthService", ["$window", "$http","$rootScope", AuthService]);
 })();

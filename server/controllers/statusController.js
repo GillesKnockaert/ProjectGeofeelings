@@ -189,17 +189,8 @@ var statusController = (function () {
             //1. save location
 
             var jsonLocation = JSON.parse(req.body._location);
-            /*
-            var newLocation = new Location({
-                name: jsonLocation.name,
-                location: {
-                    coordinates: [jsonLocation.location[0],jsonLocation.location[1]]
-                }
-            });
-            */
 
             Location.create(jsonLocation, function (err, newLocation) {
-            //newLocation.save(function(err, newLocation){
                 if (err) {
                     var error = httpErrors(500);
                     error.message = "Something went wrong while saving the location.";
@@ -215,7 +206,7 @@ var statusController = (function () {
                         _location: newLocation
                     };
 
-                    //2.2
+                    //2.2 save status
                     Status.create(newStatus, function (err, newStatus) {
                         if (err) {
                             var error = httpErrors(500);
@@ -228,50 +219,7 @@ var statusController = (function () {
                 }
             });
         }
-
-            /*
-            //2. save status
-
-            //req.body._location = _location;
-            var status = req.body;
-
-            Status.create(status, function (err) {
-                if (err) {
-                    var error = httpErrors(500);
-                    error.message = "Something went wrong while saving the status.";
-                    return next(error, null);
-                } else {
-                    return next(null, status);
-                }
-            });
-            */
-
-            /*
-         //create a new instance of the status model
-         var status = new Status();
-
-         //Set the Status properties that came from the POST data
-
-         status.mood = req.body.mood;
-         status.message = req.body.message;
-
-         //passport will automatically set the user in req.user
-         status._creator = req.body._id;
-
-         //save the status and check for errors
-         status.save(function (err) {
-         if (err) {
-         res.send(err);
-         return;
-         }
-
-         res.json({
-         success: 'Status added succesfully',
-         data: status
-         });
-         });
-         */
-    }
+    };
 
     var getStatuses = function (req, res) {
         //use the Status model to find all statuses
