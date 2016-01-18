@@ -1,6 +1,6 @@
 //Load mongoDB driver
 var mongoose = require('mongoose');
-var StatusSchema = require('./status');
+var StatusSchema = require('../schemas/status');
 
 var Status = mongoose.model('Status', StatusSchema, 'status');
 

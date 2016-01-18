@@ -4,7 +4,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var locationSchema = mongoose.Schema({
+var LocationSchema = new mongoose.Schema({
     location: {
         type: {
             type: String,
@@ -22,6 +22,6 @@ var locationSchema = mongoose.Schema({
     }
 });
 
-locationSchema.index({location: '2dsphere'});
+LocationSchema.index({location: '2dsphere'});
 
-module.exports = locationSchema;
+module.exports = LocationSchema;
