@@ -28,6 +28,9 @@ h1 {
   font-weight: 700;
 }
 /* Custom Horizontal Rule */
+h2 + hr {
+  border-color: #333;
+}
 hr.small {
   max-width: 100px;
 }
@@ -257,6 +260,12 @@ footer a:hover {
 .registerform button {
   width: 70px;
   margin: auto;
+}
+/* ------------------ mappen ------------------ */
+#mapDashboard {
+  height: 400px;
+  min-height: 200px;
+  width: auto;
 }
 #mapstatus {
   height: 300px;

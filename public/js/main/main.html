@@ -36,10 +36,13 @@
         </header>
     </section>
 
+<!------- dashboard
+  ng-controller="dashboardController"
+-------->
 
-    <section id="dashboardGuest" ng-hide="vm.isUserLoggedIn">
-        <h2>DashboardGuest</h2>
-
+    <section id="dashboardGuest" class="container" ng-hide="vm.isUserLoggedIn">
+        <h2 class="text-center">DashboardGuest</h2>
+        <hr class="small">
         <p>Hier komt de map die beschikbaar is voor alle niet-ingelogde gebruikers</p>
         <ul>
             <li>wereldkaart met alle 'pins' (locaties)</li>
@@ -50,12 +53,59 @@
 
     </section>
 
-    <section id="dashboardUser" ng-show="vm.isUserLoggedIn">
-        <h1>Dashboard User</h1>
+    <section id="dashboardUser" class="container" ng-show="vm.isUserLoggedIn">
+        <h2 class="text-center">Dashboard</h2>
+        <hr class="small">
+        <div id="mapDashboard"></div>
+
+
+        <script>
+            var mapDashboard = L.map('mapDashboard').setView([50, 5], 13);
+            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                id: 'gillesknockaert.ongk0729',
+                accessToken: 'pk.eyJ1IjoiZ2lsbGVza25vY2thZXJ0IiwiYSI6ImNpamllenNmczAyd2l0aG01bjRnbnpndDAifQ.SFHo6SL-fytksGkN-NvHUQ'
+            }).addTo(mapDashboard);
+
+
+            var happyicon = L.icon({
+                iconUrl: 'http://localhost:3000/img/markerHappy.png',
+                shadowUrl: 'http://localhost:3000/img/marker-shadow.png',
+                iconSize:     [40, 64], // size of the icon
+                shadowSize:   [50, 64], // size of the shadow
+                iconAnchor:   [20, 64], // point of the icon which will correspond to marker's location
+                shadowAnchor: [4, 62],  // the same for the shadow
+                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            });
+
+            var sadicon = L.icon({
+                iconUrl: 'http://localhost:3000/img/markerSad.png',
+                shadowUrl: 'http://localhost:3000/img/marker-shadow.png',
+                iconSize:     [40, 64], // size of the icon
+                shadowSize:   [50, 64], // size of the shadow
+                iconAnchor:   [20, 64], // point of the icon which will correspond to marker's location
+                shadowAnchor: [4, 62],  // the same for the shadow
+                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            });
+
+
+            L.marker([51.13215, 3.02534], {icon: happyicon}).addTo(mapDashboard).bindPopup("locatie 1");
+
+            L.marker([51.15215, 3.02534], {icon: sadicon}).addTo(mapDashboard).bindPopup("locatie 2");
+
+            L.marker([51.13215, 3.02834], {icon: happyicon}).addTo(mapDashboard).bindPopup("locatie 3");
+
+            //var marker = L.marker([51.5, -0.09]).addTo(mapDashbourd);
+            var lc = L.control.locate().addTo(mapDashboard);
+            lc.start();
+
+        </script>
+
+
     </section>
 
-    <section id="Connections" ng-show="vm.isUserLoggedIn">
-        <h1>Connections user</h1>
+    <section class="container" id="Connections" ng-show="vm.isUserLoggedIn">
+        <h2 class="text-center">Connections user</h2>
+        <hr class="small">
     </section>
 
 

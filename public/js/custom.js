@@ -21,8 +21,8 @@ $(document).on('click', "#btnhappy,#btnsad", function () {
         if (mapstatus.tap) mapstatus.tap.disable();
 
         //--- met control ---
-        var lc = L.control.locate().addTo(mapstatus);
-        lc.start();
+        var locatecontrol = L.control.locate().addTo(mapstatus);
+        locatecontrol.start();
 
         $(document).on('click', "#cancelStatus", function () {
             var lng = mapstatus.getCenter().toString().replace(" ","").split(/[(\/,)]/)[2];
@@ -30,6 +30,7 @@ $(document).on('click', "#btnhappy,#btnsad", function () {
             console.log("lng = " + lng);
             console.log("lat = " + lat);
             console.log(mapstatus.getCenter());
+            locatecontrol.stop();
         });
 
         $(document).on('click', "#submitStatus", function () {
@@ -38,9 +39,14 @@ $(document).on('click', "#btnhappy,#btnsad", function () {
             alert(lng);
             alert(lat);
             console.log(mapstatus.getCenter());
+            locatecontrol.stop();
         });
     });
 });
+
+
+
+
 
 
 // --------------------- nav js ---------------------------
