@@ -117,10 +117,21 @@
 
         };
 
+        var postStatus = function(statusInfo){
+            var url = '/api/status';
+
+            return $http.post(url, statusInfo).then(function (response) {
+                response.success = true;
+                return response;
+            }, function (error) {
+                return error;
+            });
+        };
 
         return {
             getAllUserData: getAllUserData,
-            getAllStatus : getAllStatus
+            getAllStatus : getAllStatus,
+            postStatus : postStatus
         };
     };
 

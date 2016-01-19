@@ -48,6 +48,17 @@
         });
 
 
+        $rootScope.$on('newStatus',function(e){
+            userService.getAllUserData(authService.getUserId()).then(onDataDownloaded, onDataDownloadError);
+        });
+
+        vm.init = function () {
+            if (authService.isLoggedIn()) {
+                userService.getAllUserData(authService.getUserId()).then(onDataDownloaded, onDataDownloadError);
+            }
+            ;
+        }();
+
 
         angular.extend($scope, {
             defaults: {
@@ -70,11 +81,11 @@
             }
         };
 
-        vm.loadMarkersFromConnections = function(arrConnections){
+        vm.loadMarkersFromConnections = function () {
             vm.markers = {};
 
-            arrConnections.forEach(function(connection){
-                connection.status.forEach(function(status){
+            vm.user.connections.forEach(function (connection) {
+                connection.status.forEach(function (status) {
                     var lat = status.location.latitude;
                     var lng = status.location.longitude;
 
@@ -95,8 +106,14 @@
             });
         };
 
-        vm.loadMarkersFromStatus = function (arrStatus) {
-            
+        vm.loadMarkersFromStatus = function (data) {
+            var arrStatus;
+            if (data) {
+                arrStatus = data;
+            } else {
+                arrStatus = vm.user.status;
+            }
+
             //huidige markers leegmaken
             vm.markers = {};
 
@@ -121,10 +138,11 @@
             });
         };
 
-        vm.loadAllMarkers = function(){
-            userService.getAllStatus().then(function(data){
+        vm.loadAllMarkers = function () {
+            userService.getAllStatus().then(function (data) {
                 vm.loadMarkersFromStatus(data);
-            }, function(error){});
+            }, function (error) {
+            });
         };
     };
 

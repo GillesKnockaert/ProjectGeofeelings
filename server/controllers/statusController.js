@@ -173,7 +173,7 @@ var statusController = (function () {
         //req.checkBody('latitude', 'Latitude is required').notEmpty();
         //req.checkBody('longitude', 'Longitude is required').notEmpty();
         //req.checkBody('locationName', 'LocationName is required').notEmpty();
-        req.checkBody('_location', 'LocationName is required').notEmpty();
+        req.checkBody('_location', 'Location is required').notEmpty();
 
         // check the validation object for errors
         var errors = req.validationErrors();
@@ -188,9 +188,9 @@ var statusController = (function () {
             //no client side errors
             //1. save location
 
-            var jsonLocation = JSON.parse(req.body._location);
+            //var jsonLocation = JSON.parse(req.body._location);
 
-            Location.create(jsonLocation, function (err, newLocation) {
+            Location.create(req.body._location, function (err, newLocation) {
                 if (err) {
                     var error = httpErrors(500);
                     error.message = "Something went wrong while saving the location.";

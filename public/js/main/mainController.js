@@ -4,6 +4,18 @@
     var MainController = function ($scope, $window, $rootScope, authService, userService) {
         var vm = this;
 
+        vm.newStatus = {
+            _creator: "",
+            isHappy: '',
+            message: '',
+            _location: {
+                location: {
+                    coordinates: []
+                },
+                name: ''
+            }
+        };
+
         vm.userCredentials = {
             name: '',
             password: ''
@@ -54,6 +66,24 @@
                     console.log('Error registration');
                 }
             });
+        };
+
+        vm.submitStatus = function () {
+            vm.newStatus._location.location.coordinates[0] = mapstatus.getCenter().lng;
+            vm.newStatus._location.location.coordinates[1] = mapstatus.getCenter().lat;
+            vm.newStatus._creator = authService.getUserId();
+
+            userService.postStatus(vm.newStatus).then(function(response){
+                console.log("success");
+
+                $rootScope.$emit('newStatus');
+
+            },function(error){
+
+                console.log("error");
+            });
+
+            console.log('submit status');
         };
     };
 

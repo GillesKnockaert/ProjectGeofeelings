@@ -48,6 +48,7 @@
     "express-validator": "^2.18.0",
     "gulp-env": "^0.2.0",
     "gulp-jshint": "^2.0.0",
+    "gulp-util": "^3.0.7",
     "jshint": "^2.8.0",
     "jshint-stylish": "^2.1.0",
     "supertest": "^1.1.0"

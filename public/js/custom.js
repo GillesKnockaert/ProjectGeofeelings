@@ -1,11 +1,12 @@
 /**
  * Created by gilles on 17-Dec-15.
  */
+var mapstatus;
 
 // --------------------- map js ---------------------------
 $(document).on('click', "#btnhappy,#btnsad", function () {
     $('#statusModal').on('shown.bs.modal', function () {
-        var mapstatus = L.map('mapstatus'); //.setView([50, 5], 13)
+        mapstatus = L.map('mapstatus'); //.setView([50, 5], 13)
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
             id: 'gillesknockaert.ongk0729',
             accessToken: 'pk.eyJ1IjoiZ2lsbGVza25vY2thZXJ0IiwiYSI6ImNpamllenNmczAyd2l0aG01bjRnbnpndDAifQ.SFHo6SL-fytksGkN-NvHUQ'
@@ -24,28 +25,41 @@ $(document).on('click', "#btnhappy,#btnsad", function () {
         var locatecontrol = L.control.locate().addTo(mapstatus);
         locatecontrol.start();
 
+        /*
+        var scope = angular.element($("#statusModal")).scope();
+        scope.$apply(function () {
+            scope.vmMain.newStatus._location.location.coordinates[0] = mapstatus.getCenter().lng;
+            scope.vmMain.newStatus._location.location.coordinates[1] = mapstatus.getCenter().lat;
+
+        });*/
+
         $(document).on('click', "#cancelStatus", function () {
+            /*
             var lng = mapstatus.getCenter().toString().replace(" ","").split(/[(\/,)]/)[2];
             var lat = mapstatus.getCenter().toString().replace(" ","").split(/[(\/,)]/)[1];;
             console.log("lng = " + lng);
             console.log("lat = " + lat);
             console.log(mapstatus.getCenter());
+            */
             locatecontrol.stop();
+
         });
 
         $(document).on('click', "#submitStatus", function () {
+            /*
             var lng = mapstatus.getCenter().toString().replace(" ","").split(/[(\/,)]/)[2];
             var lat = mapstatus.getCenter().toString().replace(" ","").split(/[(\/,)]/)[1];;
             alert(lng);
             alert(lat);
             console.log(mapstatus.getCenter());
+            */
+
             locatecontrol.stop();
+
+
         });
     });
 });
-
-
-
 
 
 

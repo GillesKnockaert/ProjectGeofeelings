@@ -1,4 +1,25 @@
 <div ng-controller="MainController as vmMain">
+
+    <!-- Navigation -->
+    <section id="navigation">
+        <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+        <nav id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i
+                        class="fa fa-times"></i></a>
+                <li class="sidebar-brand">
+                    <a href="#top" onclick=$("#menu-close").click();>Geofeelings</a>
+                </li>
+                <li>
+                    <a href="#connections" onclick=$("#menu-close").click();>Connections</a>
+                </li>
+                <li>
+                    <a href="#contact" onclick=$("#menu-close").click();>Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+
     <section id="login">
         <!-- Header -->
         <header id="top" class="header">
@@ -15,7 +36,8 @@
                     <input ng-model="vmMain.userCredentials.password" type="text" class="form-control" id="txtPassword"
                            placeholder="Password..." required>
                     <input type="button" class="btn-primary btn" id="btnLogin" value="Login" ng-click="vmMain.logIn()">
-                    <input type="button" class="btn-primary btn" id="btnRegister" data-toggle="modal" data-target="#myModal"
+                    <input type="button" class="btn-primary btn" id="btnRegister" data-toggle="modal"
+                           data-target="#myModal"
                            value="Register">
                 </fieldset>
 
@@ -24,19 +46,21 @@
                     <h2 ng-show="vmMain.isUserLoggedIn">Click on a smiley to share your feelings</h2>
 
                     <div>
-                        <a href="#" data-toggle="modal" id="btnhappy" data-target="#statusModal"><img class="img-responsive"
-                                                                                                      src="../img/happy.png"></a>
-                        <a href="#" data-toggle="modal" id="btnsad" data-target="#statusModal"><img class="img-responsive"
-                                                                                                    src="../img/sad.png"></a>
+                        <a href="#" ng-click="vmMain.newStatus.isHappy = true" data-toggle="modal" id="btnhappy"
+                           data-target="#statusModal"><img class="img-responsive"
+                                                           src="../img/happy.png"></a>
+                        <a href="#" ng-click="vmMain.newStatus.isHappy = false" data-toggle="modal" id="btnsad"
+                           data-target="#statusModal"><img class="img-responsive"
+                                                           src="../img/sad.png"></a>
                     </div>
                 </div>
             </div>
         </header>
     </section>
 
-<!------- dashboard
-  ng-controller="dashboardController"
--------->
+    <!------- dashboard
+      ng-controller="dashboardController"
+    -------->
 
     <section id="dashboardGuest" class="container" ng-hide="vmMain.isUserLoggedIn">
         <h2 class="text-center">Real-time happiness map</h2>
@@ -46,10 +70,24 @@
         </div>
     </section>
 
-    <section id="dashboardUser" class="container" ng-show="vmMain.isUserLoggedIn" ng-controller="DashboardController as vmDashboard">
+    <section id="dashboardUser" class="container" ng-show="vmMain.isUserLoggedIn"
+             ng-controller="DashboardController as vmDashboard">
         <h2 class="text-center">Dashboard</h2>
         <hr class="small">
+
         <div id="mapDashboardUser" ng-controller="UserMapController as vmUserMap">
+            <div class="text-center">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button ng-click="vmUserMap.loadMarkersFromStatus()" type="button" class="btn btn-default">My
+                        feelings
+                    </button>
+                    <button ng-click="vmUserMap.loadMarkersFromConnections()" type="button" class="btn btn-default">My
+                        connections feelings
+                    </button>
+                    <button ng-click="vmUserMap.loadAllMarkers()" type="button" class="btn btn-default">All feelings
+                    </button>
+                </div>
+            </div>
             <leaflet width='100%' height='400' layers="layers" markers="vmUserMap.markers"></leaflet>
         </div>
     </section>
@@ -63,7 +101,7 @@
         - statussen va nde gebruiker zelf
         - statussen van de connecties va nde gebruiker
         - statussen van iedereen op de site
-        -->
+
         <div class="text-center">
             <div class="btn-group" role="group" aria-label="...">
                 <button type="button" class="btn btn-default">My feelings</button>
@@ -117,10 +155,11 @@
         </script>
 
 
-    </section>
-    -->
 
-    <section class="container" id="Connections" ng-show="vmMain.isUserLoggedIn">
+    </section>
+-->
+
+    <section class="container" id="connections" ng-show="vmMain.isUserLoggedIn">
         <h2 class="text-center">Connections user</h2>
         <hr class="small">
     </section>
@@ -163,7 +202,8 @@
                             <!-- can contact -->
                             <div class="form-group">
                                 <label>
-                                    <input ng-model="vmMain.userRegistration.isContactable" id="cancontact" type="checkbox">
+                                    <input ng-model="vmMain.userRegistration.isContactable" id="cancontact"
+                                           type="checkbox">
                                     Other users may contact me
                                 </label>
                             </div>
@@ -190,15 +230,24 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">You are .....!</h4>
+                    <h4 class="modal-title">You are <span ng-bind="vmMain.newStatus.isHappy ? 'happy' : 'sad'"></span>!
+                    </h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal registerform" action='' method="POST">
+                    <form class="form-horizontal registerform">
                         <fieldset>
+                            <!-- location name -->
+                            <div class="form-group">
+                                <label for="locationName">Location name</label>
+                                <input type="text" ng-model="vmMain.newStatus._location.name" class="form-control"
+                                       id="locationName" rows="3" placeholder="..."/>
+                            </div>
                             <!-- reason -->
                             <div class="form-group">
-                                <label for="Reason">Why do you feel ....?</label>
-                                <textarea class="form-control" id="Reason" rows="3" placeholder="..."></textarea>
+                                <label for="Reason">Why do you feel <span
+                                        ng-bind="vmMain.newStatus.isHappy ? 'happy' : 'sad'"></span>?</label>
+                                <textarea ng-model="vmMain.newStatus.message" class="form-control" id="Reason" rows="3"
+                                          placeholder="..."></textarea>
                             </div>
 
                             <!-- map -->
@@ -207,8 +256,12 @@
                             <!-- Button -->
                             <div class="control-group">
                                 <div class="controls text-center">
-                                    <button id="submitStatus" class="btn btn-success">Submit</button>
-                                    <button id="cancelStatus" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button ng-click="vmMain.submitStatus()" id="submitStatus" class="btn btn-success">
+                                        Submit
+                                    </button>
+                                    <button id="cancelStatus" type="button" class="btn btn-danger" data-dismiss="modal">
+                                        Close
+                                    </button>
                                 </div>
                             </div>
                         </fieldset>
