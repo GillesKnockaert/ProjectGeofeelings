@@ -117,6 +117,37 @@
 
         };
 
+        var getAllUsers = function(){
+            var url = "/api/users";
+            return $http.get(url).then(function (response) {
+                //success
+                //return user data
+                var rawUsers = response.data.data;
+
+                var arrUsers = [];
+
+                angular.forEach(rawUsers, function (rawUser, key) {
+                    //User(name, password, isContactable, connections, status, createdOn, isAdmin)
+                    var newUser = new User(
+                        rawUser.name,
+                        rawUser.password,
+                        rawUser.isContactable,
+                        [],
+                        [],
+                        rawUser.createdOn,
+                        rawUser.isAdmin
+                    );
+
+
+                    arrUsers.push(newUser);
+                });
+
+                return arrUsers;
+
+            });
+
+        };
+
         var postStatus = function(statusInfo){
             var url = '/api/status';
 
@@ -131,7 +162,8 @@
         return {
             getAllUserData: getAllUserData,
             getAllStatus : getAllStatus,
-            postStatus : postStatus
+            postStatus : postStatus,
+            getAllUsers : getAllUsers
         };
     };
 

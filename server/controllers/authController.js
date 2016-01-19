@@ -42,7 +42,7 @@ var authController = (function () {
         var authenticateRequest = function (req, res, next) {
             var app = require('../../server.js');
             // check header or url parameters or post parameters for token
-            var token = req.body.token || req.query.token || req.headers['x-access-token'];
+            var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers['authorization'];
 
             // decode token
             if (token) {

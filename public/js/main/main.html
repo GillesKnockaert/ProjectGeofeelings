@@ -179,7 +179,7 @@
 
         <div class="text-center">
             <div class="btn-group" role="group" aria-label="...">
-                <button ng-click="" type="button" class="btn btn-default" data-toggle="modal"
+                <button ng-click="vmMain.loadAllUsers()" type="button" class="btn btn-default" data-toggle="modal"
                         data-target="#newConnectionModal">Add new connection
                 </button>
             </div>
@@ -306,7 +306,7 @@
     </div>
 
 
-    <!---------- Modal Status ---------->
+    <!---------- Modal Add Connection ---------->
     <div id="newConnectionModal" class="modal fade" role="dialog" ng-controller="UserMapController as vmNewConnection">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -329,8 +329,8 @@
                             <div class="form-group">
                                 <label for="searchResults">Search results</label>
 
-                                    <ul id="searchResults" ng-repeat="connection in vmNewConnection.user.connections |filter:vmNewConnection.queryConnection | orderBy: 'name'">
-                                        <li><span ng-bind="connection.name"></span></li>
+                                    <ul id="searchResults" ng-repeat="user in vmMain.allUsers |filter:vmNewConnection.queryConnection | orderBy: 'name'">
+                                        <li><span ng-bind="user.name"></span></li>
                                     </ul>
                             </div>
 

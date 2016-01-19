@@ -7,13 +7,18 @@ var UserController = (function () {
     var httpErrors = require('httperrors');
 
 
-    var getUsers = function (next) {
-        User.find({}).sort('name').exec(function (err, users) {
-            if (err) {
-                next(err, null);
-            }
-            next(null, users);
-        });
+    var getUsers = function (cb) {
+        User.find({})
+            .lean()
+            .sort('name')
+            .exec(function (err, users) {
+                if (err) {
+                    var error = httpErrors(404);
+                    error.message = "Could not find users.";
+                    return cb(error, null);
+                }
+                cb(null, users);
+            });
     };
 
     var getAllUserData = function (req, res, cb) {

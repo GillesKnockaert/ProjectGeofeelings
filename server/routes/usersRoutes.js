@@ -38,15 +38,15 @@ router.route('/login')
             //res.send('Success logging in user: ' + util.inspect(user), 201);
             res.status(200).json({
                 status: 200,
-                data : token
+                data: token
             });
 
         });
     });
 
 router.route('/:user_id')
-    .get(function(req,res,next){
-        authController.authenticateReq, userController.getAllUserData(req, res, function(error, user){
+    .get(function (req, res, next) {
+        authController.authenticateReq, userController.getAllUserData(req, res, function (error, user) {
             if (error) {
                 console.log("Error finding user");
                 //res.send('There has been an error logging in: ' + util.inspect(error), 400);
@@ -57,14 +57,14 @@ router.route('/:user_id')
             //res.send('Success logging in user: ' + util.inspect(user), 201);
             res.status(200).json({
                 status: 200,
-                data : user
+                data: user
             });
         });
     })
 
 router.route('/:user_id/connections')
-    .get(function(req,res,next){
-        authController.authenticateReq, userController.getUserConnections(req, res, function(error, user){
+    .get(function (req, res, next) {
+        authController.authenticateReq, userController.getUserConnections(req, res, function (error, user) {
             if (error) {
                 console.log("Error finding connections");
                 //res.send('There has been an error logging in: ' + util.inspect(error), 400);
@@ -75,23 +75,29 @@ router.route('/:user_id/connections')
             //res.send('Success logging in user: ' + util.inspect(user), 201);
             res.status(200).json({
                 status: 200,
-                data : user
+                data: user
             });
         });
     })
 
 router.route('/')
-    .get(authController.authenticateReq, authController.isAdmin, function (req, res) {
+    .get(function (req, res, next) {
 
-        userController.getUsers(function (error, users) {
+        authController.authenticateReq, userController.getUsers(function (error, users) {
             if (error) {
-                res.json(error);
+                console.log("Error finding users");
+                //res.send('There has been an error logging in: ' + util.inspect(error), 400);
+                return next(error);
             }
 
-            res.json(users);
+            console.log("Success finding users");
+            //res.send('Success logging in user: ' + util.inspect(user), 201);
+            res.status(200).json({
+                status: 200,
+                data: users
+            });
         });
     });
-
 
 
 /*

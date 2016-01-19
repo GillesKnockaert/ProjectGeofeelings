@@ -73,12 +73,12 @@
             vm.newStatus._location.location.coordinates[1] = mapstatus.getCenter().lat;
             vm.newStatus._creator = authService.getUserId();
 
-            userService.postStatus(vm.newStatus).then(function(response){
+            userService.postStatus(vm.newStatus).then(function (response) {
                 console.log("success");
 
                 $rootScope.$emit('newStatus');
 
-            },function(error){
+            }, function (error) {
 
                 console.log("error");
             });
@@ -86,10 +86,18 @@
             console.log('submit status');
         };
 
-        vm.logout = function(){
+        vm.logout = function () {
             authService.logout();
             vm.isUserLoggedIn = false;
         };
+
+        vm.loadAllUsers = function () {
+            userService.getAllUsers().then(function (response) {
+                vm.allUsers = response;
+            }, function (error) {
+                console.log(error);
+            });
+        }
     };
 
     angular.module("geofeelings")
