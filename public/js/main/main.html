@@ -6,19 +6,19 @@
                 <h1>GEOFEELINGS</h1>
 
                 <h3 ng-hide="vmMain.isUserLoggedIn">A webapp that shows you how the world really feels.</h3>
-
-                <fieldset ng-hide="vmMain.isUserLoggedIn">
-                    <label class="label" for="txtUsername">Username</label>
-                    <input ng-model="vmMain.userCredentials.name" type="text" class="form-control" id="txtUsername"
-                           placeholder="Username..." required>
-                    <label class="label" for="txtPassword">Password</label>
-                    <input ng-model="vmMain.userCredentials.password" type="text" class="form-control" id="txtPassword"
-                           placeholder="Password..." required>
-                    <input type="button" class="btn-primary btn" id="btnLogin" value="Login" ng-click="vmMain.logIn()">
-                    <input type="button" class="btn-primary btn" id="btnRegister" data-toggle="modal" data-target="#myModal"
-                           value="Register">
-                </fieldset>
-
+                <form>
+                    <fieldset ng-hide="vmMain.isUserLoggedIn">
+                        <label class="label" for="txtUsername">Username</label>
+                        <input ng-model="vmMain.userCredentials.name" type="text" class="form-control" id="txtUsername"
+                                   placeholder="Username..." required>
+                        <label class="label" for="txtPassword">Password</label>
+                        <input ng-model="vmMain.userCredentials.password" type="password" class="form-control" id="txtPassword"
+                               placeholder="Password..." required>
+                        <input type="submit" class="btn-primary btn" id="btnLogin" value="Login" ng-click="vmMain.logIn()">
+                        <input type="button" class="btn-primary btn" id="btnRegister" data-toggle="modal" data-target="#myModal"
+                               value="Register">
+                    </fieldset>
+                </form>
 
                 <div ng-show="vmMain.isUserLoggedIn">
                     <h2 ng-show="vmMain.isUserLoggedIn">Click on a smiley to share your feelings</h2>
@@ -116,9 +116,46 @@
 
         </script>
 
+    </section>
 
+
+
+    <section class="container" ng-show="vmMain.isUserLoggedIn">
+        <h2 class="text-center">Chat</h2>
+        <hr class="small">
+
+        <form id="chatform" action="">
+
+            <input type="text" class="form-control" id="m" autocomplete="off" placeholder="chatmessage">
+            <button id="submitmsg" type="button" class="btn btn-default">Send</button>
+            <!--
+            <input id="m" autocomplete="off" /><button>Send</button>-->
+        </form>
+        <ul id="messages">
+
+        </ul>
+
+
+
+        <!--
+        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script>
+            var socket = io();
+            $('form').submit(function(){
+                socket.emit('chat message', $('#m').val());
+                $('#m').val('');
+                return false;
+            });
+            socket.on('chat message', function(msg){
+                $('#messages').append($('<li>').text(msg));
+            });
+        </script>
+        -->
     </section>
     -->
+
+
 
     <section class="container" id="Connections" ng-show="vmMain.isUserLoggedIn">
         <h2 class="text-center">Connections user</h2>
@@ -143,21 +180,21 @@
                             <div class="form-group">
                                 <label for="username">Username</label>
                                 <input ng-model="vmMain.userRegistration.name" type="text" class="form-control"
-                                       id="username" placeholder="Username">
+                                       id="username" placeholder="Username" required>
                             </div>
 
                             <!-- Password -->
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <input ng-model="vmMain.userRegistration.password" type="password" class="form-control"
-                                       id="password" placeholder="Password">
+                                       id="password" placeholder="Password" required>
                             </div>
 
                             <!-- Password -->
                             <div class="form-group">
                                 <label for="confirmpassword">Confirm password</label>
                                 <input type="password" class="form-control" id="confirmpassword"
-                                       placeholder="Confirm password">
+                                       placeholder="Confirm password" required>
                             </div>
 
                             <!-- can contact -->

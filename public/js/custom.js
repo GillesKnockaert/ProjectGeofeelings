@@ -1,6 +1,37 @@
 /**
  * Created by gilles on 17-Dec-15.
  */
+// --------------------- socket test ---------------------------
+var socket = io();
+$(document).on('click', "#submitmsg", function () {
+    //$('#chatform').submit(function(){
+    alert("test");
+    socket.emit('chat message', $('#m').val());
+    alert($('#m').val());
+    $('#m').val('');
+    $('#messages').append($('<li>').text(msg));
+    return false;
+});
+socket.on('chat message', function(msg){
+    $('#messages').append($('<li>').text(msg));
+});
+
+
+// --------------------- password controle ---------------------------
+var password = document.getElementById("password")
+    , confirm_password = document.getElementById("confirmpassword");
+
+function validatePassword(){
+    if(password.value != confirm_password.value) {
+        confirm_password.setCustomValidity("Passwords Don't Match");
+    } else {
+        confirm_password.setCustomValidity('');
+    }
+}
+
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+
 
 // --------------------- map js ---------------------------
 $(document).on('click', "#btnhappy,#btnsad", function () {

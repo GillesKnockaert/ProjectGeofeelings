@@ -35,6 +35,8 @@ app.use(passport.initialize());
 app.use(validator([]));
 
 
+
+
 //registreren van de routes
 
 app.use('/api/users/', usersRoute);  //gebruik de usersRoute module voor alle routes die starten met /api/users
