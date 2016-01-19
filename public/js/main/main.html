@@ -58,6 +58,20 @@
     <section id="dashboardUser" class="container" ng-show="vmMain.isUserLoggedIn" ng-controller="DashboardController as vmDashboard">
         <h2 class="text-center">Dashboard</h2>
         <hr class="small">
+
+        <!--
+        - statussen va nde gebruiker zelf
+        - statussen van de connecties va nde gebruiker
+        - statussen van iedereen op de site
+        -->
+        <div class="text-center">
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default">My feelings</button>
+                <button type="button" class="btn btn-default">My connections feelings</button>
+                <button type="button" class="btn btn-default">All feelings</button>
+            </div>
+        </div>
+
         <div id="mapDashboard"></div>
 
 
