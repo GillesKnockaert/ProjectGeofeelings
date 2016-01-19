@@ -71,6 +71,7 @@
         <div id="mapDashboardGuest" ng-controller="GuestMapController as vmGuestMap">
             <leaflet width='100%' height='400' layers="layers" markers="markers"></leaflet>
         </div>
+        <hr class="small">
     </section>
 
     <section id="dashboardUser" class="container" ng-show="vmMain.isUserLoggedIn"
@@ -162,9 +163,21 @@
     </section>
 -->
 
-    <section class="container" id="connections" ng-show="vmMain.isUserLoggedIn">
+    <section class="row connect container" id="connections" ng-show="vmMain.isUserLoggedIn"
+             ng-controller="UserMapController as vmConnections">
         <h2 class="text-center">Connections user</h2>
         <hr class="small">
+
+        <ul ng-repeat="connection in vmConnections.user.connections">
+            <li class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div>
+                    <img src="img/user.png">
+
+                    <p><span ng-bind="connection.name"></span></p>
+                </div>
+            </li>
+        </ul>
+
     </section>
 
 
