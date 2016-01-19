@@ -22,7 +22,7 @@ var UserController = (function () {
         User.findById(user_id)
             .lean()
             //.populate('connections status')
-            .populate({path: "status"})
+            .populate({path: "status connections"})
             .exec(function (err, user) {
                 if (err) {
                     var error = httpErrors(404);
@@ -37,10 +37,10 @@ var UserController = (function () {
                         options: {lean: true}
                     },
                     {
-                        path: 'connections',
-                        model: 'User',
+                        path: 'connections.status',
+                        model: 'Status',
                         options: {lean: true}
-                    }
+                    },
                 ];
 
                 User.populate(user, options, function (err, user) {
@@ -49,7 +49,26 @@ var UserController = (function () {
                         error.message = "Could not find user.";
                         return cb(error, null);
                     }
-                    return cb(null, user);
+
+                    var options = [
+                        {
+                            path: 'connections.status._location',
+                            model: 'Location',
+                            options: {lean: true}
+                        }
+                    ];
+
+                    User.populate(user, options, function (err, user) {
+                        if (err) {
+                            var error = httpErrors(404);
+                            error.message = "Could not find user.";
+                            return cb(error, null);
+                        }
+                        return cb(null, user);
+
+                    })
+
+
                 });
 
             });

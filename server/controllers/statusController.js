@@ -224,7 +224,9 @@ var statusController = (function () {
     var getStatuses = function (req, res) {
         //use the Status model to find all statuses
         //from a particular user with their username
-        Status.find({}).lean().exec(function (err, statuses) {
+        Status.find({})
+            .lean()
+            .exec(function (err, statuses) {
             if (err) {
                 res.send(err);
                 return;
@@ -284,7 +286,7 @@ var statusController = (function () {
             }
             res.json(status);
         });
-    }
+    };
 
     var putStatus = function (req, res) {
         //use the Status model to find a specific status

@@ -13,6 +13,7 @@
 
                 var userStatus = [];
                 var userConnections = [];
+                var connectionStatus = [];
 
                 angular.forEach(rawUser.status, function (status, key) {
                     //Location(statusId,name,longitude, latitude)
@@ -34,10 +35,33 @@
                 });
 
                 angular.forEach(rawUser.connections, function(connection,key){
-                    //Connection(userId, name)
+
+                    angular.forEach(connection.status, function(status, key){
+                        var newLocation = new Location(
+                            status._location._id,
+                            status._location.name,
+                            status._location.location.coordinates[0],//longitude
+                            status._location.location.coordinates[1] //latitude
+                        );
+
+                        var newStatus = new Status();
+                        newStatus.user = userId;
+                        newStatus.isHappy = status.isHappy;
+                        newStatus.message = status.message;
+                        newStatus.createdOn = status.createdOn;
+                        newStatus.location = newLocation;
+
+                        connectionStatus.push(newStatus);
+                    });
+
+                    //Connection(userId, name, isContactable, status, createdOn, isAdmin)
                     var newConnection = new Connection(
                         connection._id,
-                        connection.name
+                        connection.name,
+                        connection.isContactable,
+                        connectionStatus,
+                        connection.createdOn,
+                        connection.isAdmin
                     );
 
                     userConnections.push(newConnection);

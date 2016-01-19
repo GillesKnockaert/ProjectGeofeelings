@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    var GuestMapController = function ($scope, userService) {
+    var GuestMapController = function ($scope, userService, authService) {
         var vm = this;
 
         var local_icons = {
@@ -79,7 +79,9 @@
 
 
         $scope.init = function () {
-            userService.getAllStatus().then(onStatusDownloaded, onStatusDownloadError);
+            if(!authService.isLoggedIn()) {
+                userService.getAllStatus().then(onStatusDownloaded, onStatusDownloadError);
+            }
         }();
 
 
@@ -87,6 +89,6 @@
 
 
     angular.module("geofeelings")
-        .controller("GuestMapController", ["$scope", "UserService", GuestMapController]);
+        .controller("GuestMapController", ["$scope", "UserService","AuthService", GuestMapController]);
 
 })();

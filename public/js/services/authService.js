@@ -63,7 +63,7 @@
             userId = userToken._id;
 
             return userId;
-        }
+        };
 
 
         var saveToken = function (expToken) {
@@ -78,7 +78,8 @@
             isLoggedIn: isLoggedIn,
             register: register,
             logIn: logIn,
-            getTokenInfo: getTokenInfo
+            getTokenInfo: getTokenInfo,
+            getUserId : getUserId
         };
     };
 
