@@ -85,6 +85,11 @@
 
             console.log('submit status');
         };
+
+        vm.logout = function(){
+            authService.logout();
+            vm.isUserLoggedIn = false;
+        };
     };
 
     angular.module("geofeelings")

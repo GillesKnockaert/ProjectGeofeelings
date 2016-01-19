@@ -6,6 +6,8 @@
 
         vm.markers = {};
 
+        vm.queryConnection = "";
+
         var local_icons = {
             happy_icon: {
                 iconUrl: '/img/markerHappy.png',

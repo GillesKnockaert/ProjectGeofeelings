@@ -74,12 +74,17 @@
             delete $window.sessionStorage.token;
         };
 
+        var logout = function(){
+            removeToken();
+        };
+
         return {
             isLoggedIn: isLoggedIn,
             register: register,
             logIn: logIn,
             getTokenInfo: getTokenInfo,
-            getUserId : getUserId
+            getUserId : getUserId,
+            logout: logout
         };
     };
 

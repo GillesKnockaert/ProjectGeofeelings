@@ -13,11 +13,20 @@
                 <li>
                     <a href="/instructions" onclick=$("#menu-close").click();>Instructions</a>
                 </li>
-                <li>
+                <li ng-hide="vmMain.isUserLoggedIn">
+                    <a href="#dashboardGuest" onclick=$("#menu-close").click();>Happiness map</a>
+                </li>
+                <li ng-show="vmMain.isUserLoggedIn">
+                    <a href="#dashboardUser" onclick=$("#menu-close").click();>Dashboard</a>
+                </li>
+                <li ng-show="vmMain.isUserLoggedIn">
                     <a href="#connections" onclick=$("#menu-close").click();>Connections</a>
                 </li>
                 <li>
                     <a href="#contact" onclick=$("#menu-close").click();>Contact</a>
+                </li>
+                <li ng-show="vmMain.isUserLoggedIn">
+                    <a href="/" ng-click="vmMain.logout()" onclick=$("#menu-close").click();>Logout</a>
                 </li>
             </ul>
         </nav>
@@ -168,6 +177,15 @@
         <h2 class="text-center">Connections user</h2>
         <hr class="small">
 
+        <div class="text-center">
+            <div class="btn-group" role="group" aria-label="...">
+                <button ng-click="" type="button" class="btn btn-default" data-toggle="modal"
+                        data-target="#newConnectionModal">Add new connection
+                </button>
+            </div>
+        </div>
+
+
         <ul ng-repeat="connection in vmConnections.user.connections">
             <li class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                 <div>
@@ -276,6 +294,55 @@
                                         Submit
                                     </button>
                                     <button id="cancelStatus" type="button" class="btn btn-danger" data-dismiss="modal">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!---------- Modal Status ---------->
+    <div id="newConnectionModal" class="modal fade" role="dialog" ng-controller="UserMapController as vmNewConnection">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add new connection
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal registerform">
+                        <fieldset>
+                            <!-- connection name -->
+                            <div class="form-group">
+                                <label for="connectionName">Connection name</label>
+                                <input ng-model="vmNewConnection.queryConnection" type="text" class="form-control"
+                                       id="connectionName" rows="3" placeholder="..."/>
+                            </div>
+                            <!-- search results -->
+                            <div class="form-group">
+                                <label for="searchResults">Search results</label>
+
+                                    <ul id="searchResults" ng-repeat="connection in vmNewConnection.user.connections |filter:vmNewConnection.queryConnection | orderBy: 'name'">
+                                        <li><span ng-bind="connection.name"></span></li>
+                                    </ul>
+                            </div>
+
+
+                            <!-- Button -->
+                            <div class="control-group">
+                                <div class="controls text-center">
+                                    <button ng-click="" id="addConnection" class="btn btn-success">
+                                        Submit
+                                    </button>
+                                    <button id="cancelAddConnection" type="button" class="btn btn-danger"
+                                            data-dismiss="modal">
                                         Close
                                     </button>
                                 </div>
