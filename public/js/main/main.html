@@ -105,72 +105,39 @@
         </div>
     </section>
 
-    <!--
-    <section id="dashboardUser" class="container" ng-show="vmMain.isUserLoggedIn" ng-controller="DashboardController as vmDashboard">
-        <h2 class="text-center">Dashboard</h2>
+    <section class="container" ng-show="vmMain.isUserLoggedIn">
+        <h2 class="text-center">Chat</h2>
         <hr class="small">
 
+        <form id="chatform" action="">
+
+            <input type="text" class="form-control" id="m" autocomplete="off" placeholder="chatmessage">
+            <button id="submitmsg" type="button" class="btn btn-default">Send</button>
+            <!--
+         <input id="m" autocomplete="off" /><button>Send</button>-->
+        </form>
+        <ul id="messages">
+
+        </ul>
+
+
         <!--
-        - statussen va nde gebruiker zelf
-        - statussen van de connecties va nde gebruiker
-        - statussen van iedereen op de site
-
-        <div class="text-center">
-            <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-default">My feelings</button>
-                <button type="button" class="btn btn-default">My connections feelings</button>
-                <button type="button" class="btn btn-default">All feelings</button>
-            </div>
-        </div>
-
-        <div id="mapDashboard"></div>
-
-
-        <script>
-            var mapDashboard = L.map('mapDashboard').setView([50.8504500, 4.3487800], 8);
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                id: 'gillesknockaert.ongk0729',
-                accessToken: 'pk.eyJ1IjoiZ2lsbGVza25vY2thZXJ0IiwiYSI6ImNpamllenNmczAyd2l0aG01bjRnbnpndDAifQ.SFHo6SL-fytksGkN-NvHUQ'
-            }).addTo(mapDashboard);
-
-
-            var happy = L.icon({
-                iconUrl: 'http://localhost:3000/img/markerHappy.png',
-                shadowUrl: 'http://localhost:3000/img/marker-shadow.png',
-                iconSize:     [40, 64], // size of the icon
-                shadowSize:   [50, 64], // size of the shadow
-                iconAnchor:   [20, 64], // point of the icon which will correspond to marker's location
-                shadowAnchor: [4, 62],  // the same for the shadow
-                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-            });
-
-            var sad = L.icon({
-                iconUrl: 'http://localhost:3000/img/markerSad.png',
-                shadowUrl: 'http://localhost:3000/img/marker-shadow.png',
-                iconSize:     [40, 64], // size of the icon
-                shadowSize:   [50, 64], // size of the shadow
-                iconAnchor:   [20, 64], // point of the icon which will correspond to marker's location
-                shadowAnchor: [4, 62],  // the same for the shadow
-                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-            });
-
-            //hier moeten de markers opgemaakt worden die verwachten een lng, lat, userstatus en een bericht
-            //L.marker([location.latitude, location.longtitude], {icon: isHappy}).addTo(mapDashboard).bindPopup("user : " + "message");
-
-            L.marker([51.13215, 3.02534], {icon: happy}).addTo(mapDashboard).bindPopup("locatie 1");
-            L.marker([51.15215, 3.02534], {icon: sad}).addTo(mapDashboard).bindPopup("locatie 2");
-            L.marker([51.13215, 3.02834], {icon: happy}).addTo(mapDashboard).bindPopup("locatie 3");
-
-            //zorgt dat er gecentreerd wordt op jouw.
-            //var lc = L.control.locate().addTo(mapDashboard);
-            //lc.start();
-
-        </script>
-
-
-
+     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+     <script>
+         var socket = io();
+         $('form').submit(function(){
+             socket.emit('chat message', $('#m').val());
+             $('#m').val('');
+             return false;
+         });
+         socket.on('chat message', function(msg){
+             $('#messages').append($('<li>').text(msg));
+         });
+     </script>
+     -->
     </section>
--->
+
 
     <section class="row connect container" id="connections" ng-show="vmMain.isUserLoggedIn"
              ng-controller="UserMapController as vmConnections">
@@ -216,21 +183,21 @@
                             <div class="form-group">
                                 <label for="username">Username</label>
                                 <input ng-model="vmMain.userRegistration.name" type="text" class="form-control"
-                                       id="username" placeholder="Username">
+                                       id="username" placeholder="Username" required>
                             </div>
 
                             <!-- Password -->
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <input ng-model="vmMain.userRegistration.password" type="password" class="form-control"
-                                       id="password" placeholder="Password">
+                                       id="password" placeholder="Password" required>
                             </div>
 
                             <!-- Password -->
                             <div class="form-group">
                                 <label for="confirmpassword">Confirm password</label>
                                 <input type="password" class="form-control" id="confirmpassword"
-                                       placeholder="Confirm password">
+                                       placeholder="Confirm password" required>
                             </div>
 
                             <!-- can contact -->
@@ -329,9 +296,10 @@
                             <div class="form-group">
                                 <label for="searchResults">Search results</label>
 
-                                    <ul id="searchResults" ng-repeat="user in vmMain.allUsers |filter:vmNewConnection.queryConnection | orderBy: 'name'">
-                                        <li><span ng-bind="user.name"></span></li>
-                                    </ul>
+                                <ul id="searchResults"
+                                    ng-repeat="user in vmMain.allUsers |filter:vmNewConnection.queryConnection | orderBy: 'name'">
+                                    <li><span ng-bind="user.name"></span></li>
+                                </ul>
                             </div>
 
 
