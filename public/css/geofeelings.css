@@ -326,6 +326,8 @@ footer a:hover {
   max-height: 150px;
 }
 .instructionHeader {
+  height: 100vh;
+  min-height: 600px;
   background-color: #1b6d85;
   color: #fff;
 }
